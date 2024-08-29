@@ -111,6 +111,7 @@ if (isset($_POST["produto"])) {
 			]);
 		}
 	}
+	
 
 	header("location: ../?ok=");
 	exit;
