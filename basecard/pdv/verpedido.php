@@ -1265,8 +1265,6 @@ $atendente_fechador_pedido = $pedidoData['atendente_fechador'];
 							?>
 
 
-
-
 						</div>
 						<!-- Se o Status parcial 5 ou seja o registro de pagamento foi finalizado  -->
 					<?php  } else if ($status_parcial === "5") { ?>
@@ -1318,7 +1316,7 @@ $atendente_fechador_pedido = $pedidoData['atendente_fechador'];
 											<?php } ?>
 
 											<?php
-											$meiom  = $connect->query("SELECT * FROM store_o WHERE idp = '" . $carpro->idpedido . "' AND status = '1' AND idu='$cod_id' AND meioameio='1' ");
+											$meiom  = $connect->query("SELECT * FROM store_o WHERE idp = '" . $carpro->idpedido . "' AND status = '1' AND idu='$cod_id' AND meioameio='1' AND id_referencia='" . $carpro->referencia . "' ");
 											$meiomc = $meiom->rowCount();
 											?>
 
@@ -1688,7 +1686,7 @@ $atendente_fechador_pedido = $pedidoData['atendente_fechador'];
 									<?php } ?>
 
 									<?php
-									$meiom2  = $connect->query("SELECT * FROM store_o WHERE idp = '" . $carpro2->idpedido . "' AND status = '1' AND idu='$cod_id' AND meioameio='1'");
+									$meiom2  = $connect->query("SELECT * FROM store_o WHERE idp = '" . $carpro2->idpedido . "' AND status = '1' AND idu='$cod_id' AND meioameio='1'AND id_referencia='" . $carpro2->referencia . "'");
 									$meiomc2 = $meiom2->rowCount();
 									?>
 

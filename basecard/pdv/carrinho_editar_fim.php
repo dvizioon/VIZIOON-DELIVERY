@@ -25,7 +25,7 @@
 	   					<div class="col-6">Adicionais</div>
 	   					<div class="col-6">R$:
 	   						<?php
-								$opcionais  = $connect->query("SELECT valor, quantidade FROM store_o WHERE ids = '" . $id_cliente . "' AND status = '1' AND idu='$idu' AND meioameio='0'");
+								$opcionais  = $connect->query("SELECT valor, quantidade FROM store_o WHERE ids = '" . $id_cliente . "' AND status = '1' AND idu='$idu' AND meioameio='0' AND id_referencia='" . $carpro->referencia . "'");
 								$sumx = 0;
 								while ($valork = $opcionais->fetch(PDO::FETCH_OBJ)) {
 									$quantop = $valork->quantidade;

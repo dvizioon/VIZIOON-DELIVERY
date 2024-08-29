@@ -76,23 +76,24 @@
 		</div>
 	</div>
 
-	<?php if ($carpro && isset($carpro->referencia)) { ?>
-		<div class="row mg-t-10">
-			<div class="col-6">Adicionais</div>
-			<div class="col-6">R$:
-				<?php
-				$opcionais  = $connect->query("SELECT valor, quantidade FROM store_o WHERE ids = '" . $id_cliente . "' AND status = '1' AND idu='$idu' AND meioameio='0' AND id_referencia='" . $carpro->referencia . "'");
-				while ($valork = $opcionais->fetch(PDO::FETCH_OBJ)) {
-					$quantop = $valork->quantidade;
-					$valorop = $valork->valor;
-					$totais = $valorop * $quantop;
-					$sumx += $totais;
-				}
-				echo $opctg = number_format($sumx, 2, ',', ' ');
-				?>
-			</div>
+	<div class="row mg-t-10">
+		<div class="col-6">Adicionais</div>
+		<div class="col-6">R$:
+			<?php
+			$opcionais  = $connect->query("SELECT valor, quantidade FROM store_o WHERE ids = '" . $id_cliente . "' AND status = '1' AND idu='$idu' AND meioameio='0'");
+			$sumx = 0;
+			while ($valork = $opcionais->fetch(PDO::FETCH_OBJ)) {
+				$quantop = $valork->quantidade;
+				$valorop = $valork->valor;
+				$totais = $valorop * $quantop;
+				$sumx += $totais;
+			}
+			echo $opctg = number_format($sumx, 2, ',', ' ');
+			?>
+			<input type="hidden" name="adcionais" class="form-control" value="<?php echo $sumx; ?>">
 		</div>
-	<?php } ?>
+	</div>
+
 
 
 	<div class="row  mg-t-10">

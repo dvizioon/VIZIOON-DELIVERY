@@ -213,7 +213,7 @@ include_once('../../funcoes/Key.php');
                                             <?php } ?>
 
                                             <?php
-                                            $meiom  = $connect->query("SELECT * FROM store_o WHERE idp = '" . $carpro->idpedido . "' AND status = '1' AND idu='$cod_id' AND meioameio='1'");
+                                            $meiom  = $connect->query("SELECT * FROM store_o WHERE idp = '" . $carpro->idpedido . "' AND status = '1' AND idu='$cod_id' AND meioameio='1' id_referencia='" . $carpro->referencia . "' ");
                                             $meiomc = $meiom->rowCount();
                                             ?>
 

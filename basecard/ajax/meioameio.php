@@ -19,9 +19,15 @@
 			$grupomeios = $grupomeioQuery->fetch(PDO::FETCH_OBJ);
 
 			$opcionaismeioQuery = $connect->query("SELECT * FROM opcionais WHERE idg='" . $grupomeios->Id . "' AND status='1'");
+			$first = true; // Variável para identificar o primeiro checkbox
 			while ($opcionaismeios = $opcionaismeioQuery->fetch(PDO::FETCH_OBJ)): ?>
 				<div class="col-9">
-					<input type="checkbox" name="meioameios[]" id="idmeioameio" value="<?php print $opcionaismeios->opnome; ?>,<?php print $opcionaismeios->valor; ?>"> - <span><?php print $opcionaismeios->opnome; ?></span>
+					<input type="checkbox" name="meioameios[]" id="idmeioameio" value="<?php print $opcionaismeios->opnome; ?>,<?php print $opcionaismeios->valor; ?>"
+						<?php if ($first) {
+							echo 'required';
+							$first = false;
+						} ?>> <!-- Adiciona required ao primeiro item -->
+					- <span><?php print $opcionaismeios->opnome; ?></span>
 
 					<?php if ($opcionaismeios->opdescricao != "N"): ?>
 						<p style="font-size:10px; color:#CCCC00">- <?php print $opcionaismeios->opdescricao; ?></p>

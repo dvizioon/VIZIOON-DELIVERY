@@ -63,7 +63,7 @@ if (isset($_POST["pedidobalcao"])) {
 	$stmt_pedido = $connect->prepare($sql_pedido);
 	$stmt_pedido->bindParam(':idpedido', $id_cliente);
 	$stmt_pedido->bindParam(':atendente_criador', $nome_funcionario_criador);
-	
+
 
 	// echo $nome_funcionario_criador;
 	// echo $id_cliente;
@@ -73,7 +73,7 @@ if (isset($_POST["pedidobalcao"])) {
 	// } else {
 	// 	echo "Erro na atualização do atendente criador.";
 	// }
-	
+
 
 	$inst = $connect->query("INSERT INTO pedidos(idu, idpedido, fpagamento, cidade, numero, complemento, rua, bairro, troco, nome, data, hora, celular, taxa, mesa, pessoas, obs, vsubtotal, vadcionais, vtotal, entrada) VALUES ('$idu','$id_cliente','$fmpgto','cidade','$numero','$complemento','$rua','$bairro','$troco','$nome','$data','$hora','$wps','$taxa','0','0','0','$subtotal','$adcionais','$totalg','$totalg')");
 	$update = $connect->query("UPDATE store SET status='1' WHERE idsecao='$id_cliente'");

@@ -250,25 +250,29 @@ $status_parcial = isset($status) ? $status : '';
 			}
 			echo $opctg = number_format($sumx, 2, ',', ' ');
 			?>
+			<input type="hidden" name="adcionais" class="form-control" value="<?php echo $sumx; ?>">
 		</div>
 	</div>
 
-
-	<div class="row  mg-t-10">
+	<div class="row mg-t-10">
 		<div class="col-6 tx-16"><strong>Total Geral</strong></div>
-		<div class="col-6 tx-16"><strong>R$: <?php if (isset($somando->soma)) {
-													$geral = $somando->soma + $sumx;
+		<div class="col-6 tx-16"><strong>R$:
+				<?php
+				if (isset($somando->soma)) {
+					$geral = $somando->soma + $sumx;
 
-													if ($total_global_soucer !== 0) {
-														// Valor Subtraido
-														$valor_total = floatval($geral) - floatval($valor_total_pago);
-														echo $gx = number_format($valor_total, 2, ',', '.');
-													} else {
-														echo $gx = number_format($geral, 2, ',', '.');
-													}
-												} else {
-													print "0,00";
-												} ?></strong></div>
+					if ($total_global_soucer !== 0) {
+						// Valor Subtraído
+						$valor_total = floatval($geral) - floatval($valor_total_pago);
+						echo $gx = number_format($valor_total, 2, ',', '.');
+					} else {
+						echo $gx = number_format($geral, 2, ',', '.');
+					}
+				} else {
+					print "0,00";
+				}
+				?>
+			</strong></div>
 	</div>
 
 	<?php if ($geral > $dadosempresa->dfree) {
