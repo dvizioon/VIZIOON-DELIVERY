@@ -286,18 +286,85 @@ if (isset($_POST["addEmpresa_urln"])) {
         // $conteudoz .= "include('FuncoesM.php');\n";
         // $conteudoz;
 
+        // $conteudox  = "<?php\n";
+        // $conteudox .= "ob_start();\n";
+        // $conteudox .= "session_start();\n";
+
+        // // Verifica se a sessão 'id_cliente' não está definida
+        // $conteudox .= "if (!isset(" . $dad . "_SESSION['id_cliente'])) {\n";
+        // // Gera um único id_cliente e salva na sessão
+        // $conteudox .= "" . $dad . "id_cliente = rand(100000, 999999) . 'PW';\n";
+        // $conteudox .= "" . $dad . "_SESSION['id_cliente'] = " . $dad . "id_cliente;\n";
+        // $conteudox .= "} else {\n";
+        // // Recupera o id_cliente da sessão existente
+        // $conteudox .= "" . $dad . "id_cliente = " . $dad . "_SESSION['id_cliente'];\n";
+        // $conteudox .= "}\n";
+
+        // // Verifica se o id_cliente foi gerado ou recuperado corretamente
+        // $conteudox .= "if (!isset(" . $dad . "id_cliente)) { header('location: ./'); exit; }\n";
+        // $conteudox .= "include('../funcoes/Conexao.php');\n";
+        // $conteudox .= "include('../funcoes/Key.php');\n";
+        // $conteudox .= "include('db/base.php');\n";
+
+        // // Definições adicionais
+        // $conteudox .= "" . $dad . "xurl = '" . $urln . "';\n";
+        // $conteudox .= "" . $dad . "site = HOME;\n";
+        // $conteudox .= "include('db/Funcoes.php');\n";
+        // $conteudox .= "" . $dad . "Url[1] = (empty(" . $dad . "Url[1]) ? null : " . $dad . "Url[1]);\n";
+        // $conteudox;
+
+        // file_put_contents("../" . $urln . "/header.php", $conteudox);
+
+        // $conteudoy  = "<?php\n";
+        // $conteudoy .= "define('HOME', '" . $urlm . "/" . $urln . "/');\n";
+        // $conteudoy .= "setlocale(LC_ALL, 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'portuguese');\n";
+        // $conteudoy;
+
+        // file_put_contents("../" . $urln . "/db/base.php", $conteudoy);
+
+        // $conteudoz  = "<?php\n";
+        // $conteudoz .= "ob_start();\n";
+
+        // // Verifica se o cookie 'pedidomesa' está definido
+        // $conteudoz .= "if (isset(" . $dad . "_COOKIE['pedidomesa'])) {\n";
+        // $conteudoz .= "" . $dad . "id_mesa = " . $dad . "_COOKIE['pedidomesa'];\n";
+        // $conteudoz .= "} else {\n";
+        // // Define o cookie se não estiver presente
+        // $conteudoz .= "" . $dad . "cookie_cel = 'pedidomesa';\n";
+        // $conteudoz .= "" . $dad . "cookie_value2 = rand(100000, 999999);\n";
+        // $conteudoz .= "setcookie(" . $dad . "cookie_cel, " . $dad . "cookie_value2, time() + (3500 * 5));\n";
+        // $conteudoz .= "" . $dad . "id_mesa = " . $dad . "_COOKIE['pedidomesa'];\n";
+        // $conteudoz .= "}\n";
+
+        // // Verifica se o id_mesa foi definido corretamente
+        // $conteudoz .= "if (!isset(" . $dad . "id_mesa)) { header('location: finalizado.php'); exit; }\n";
+        // $conteudoz .= "include('../../funcoes/Conexao.php');\n";
+        // $conteudoz .= "include('../../funcoes/Key.php');\n";
+        // $conteudoz .= "include('../db/base.php');\n";
+        // $conteudoz .= "require('../db/Mobile_Detect.php');\n";
+        // $conteudoz .= "" . $dad . "detect = new Mobile_Detect;\n";
+        // $conteudoz .= "" . $dad . "xurl = '" . $urln . "';\n";
+        // $conteudoz .= "" . $dad . "site = HOME;\n";
+        // $conteudoz .= "include('FuncoesM.php');\n";
+        // $conteudoz;
+
+        // Código para gerar o conteúdo do arquivo header.php
         $conteudox  = "<?php\n";
         $conteudox .= "ob_start();\n";
         $conteudox .= "session_start();\n";
 
         // Verifica se a sessão 'id_cliente' não está definida
         $conteudox .= "if (!isset(" . $dad . "_SESSION['id_cliente'])) {\n";
-        // Gera um único id_cliente e salva na sessão
-        $conteudox .= "" . $dad . "id_cliente = rand(100000, 999999) . 'PW';\n";
-        $conteudox .= "" . $dad . "_SESSION['id_cliente'] = " . $dad . "id_cliente;\n";
+        $conteudox .= "    // Gera um único id_cliente com o sufixo 'PW'\n";
+        $conteudox .= "    " . $dad . "id_cliente = rand(100000, 999999) . 'PW';\n";
+        $conteudox .= "    " . $dad . "_SESSION['id_cliente'] = " . $dad . "id_cliente;\n";
         $conteudox .= "} else {\n";
-        // Recupera o id_cliente da sessão existente
-        $conteudox .= "" . $dad . "id_cliente = " . $dad . "_SESSION['id_cliente'];\n";
+        $conteudox .= "    " . $dad . "id_cliente = " . $dad . "_SESSION['id_cliente'];\n";
+        $conteudox .= "    // Força a adição do sufixo 'PW' se não estiver presente\n";
+        $conteudox .= "    if (strpos(" . $dad . "id_cliente, 'PW') === false) {\n";
+        $conteudox .= "        " . $dad . "id_cliente .= 'PW';\n";
+        $conteudox .= "        " . $dad . "_SESSION['id_cliente'] = " . $dad . "id_cliente;\n";
+        $conteudox .= "    }\n";
         $conteudox .= "}\n";
 
         // Verifica se o id_cliente foi gerado ou recuperado corretamente
@@ -315,6 +382,7 @@ if (isset($_POST["addEmpresa_urln"])) {
 
         file_put_contents("../" . $urln . "/header.php", $conteudox);
 
+        // Código para gerar o conteúdo do arquivo base.php
         $conteudoy  = "<?php\n";
         $conteudoy .= "define('HOME', '" . $urlm . "/" . $urln . "/');\n";
         $conteudoy .= "setlocale(LC_ALL, 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'portuguese');\n";
@@ -322,18 +390,19 @@ if (isset($_POST["addEmpresa_urln"])) {
 
         file_put_contents("../" . $urln . "/db/base.php", $conteudoy);
 
+        // Código para gerar o conteúdo do arquivo mesa/header.php
         $conteudoz  = "<?php\n";
         $conteudoz .= "ob_start();\n";
 
         // Verifica se o cookie 'pedidomesa' está definido
         $conteudoz .= "if (isset(" . $dad . "_COOKIE['pedidomesa'])) {\n";
-        $conteudoz .= "" . $dad . "id_mesa = " . $dad . "_COOKIE['pedidomesa'];\n";
+        $conteudoz .= "    " . $dad . "id_mesa = " . $dad . "_COOKIE['pedidomesa'];\n";
         $conteudoz .= "} else {\n";
-        // Define o cookie se não estiver presente
-        $conteudoz .= "" . $dad . "cookie_cel = 'pedidomesa';\n";
-        $conteudoz .= "" . $dad . "cookie_value2 = rand(100000, 999999);\n";
-        $conteudoz .= "setcookie(" . $dad . "cookie_cel, " . $dad . "cookie_value2, time() + (3500 * 5));\n";
-        $conteudoz .= "" . $dad . "id_mesa = " . $dad . "_COOKIE['pedidomesa'];\n";
+        $conteudoz .= "    // Define o cookie se não estiver presente\n";
+        $conteudoz .= "    " . $dad . "cookie_cel = 'pedidomesa';\n";
+        $conteudoz .= "    " . $dad . "cookie_value2 = rand(100000, 999999);\n";
+        $conteudoz .= "    setcookie(" . $dad . "cookie_cel, " . $dad . "cookie_value2, time() + (3500 * 5));\n";
+        $conteudoz .= "    " . $dad . "id_mesa = " . $dad . "_COOKIE['pedidomesa'];\n";
         $conteudoz .= "}\n";
 
         // Verifica se o id_mesa foi definido corretamente
@@ -358,5 +427,6 @@ if (isset($_POST["addEmpresa_urln"])) {
             $_SESSION["card_indisponivel"] = false;
             header("location: ./AddEmpresa.php");
         }
+
     }
 }
