@@ -1,0 +1,475 @@
+	/* .modal_finalizacao {
+			display: none;
+			position: fixed;
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgb(0, 0, 0);
+			background-color: rgba(0, 0, 0, 0.4);
+		}
+
+		.modal_finalizacao-content {
+			background-color: #fefefe;
+			margin: 15% auto;
+			padding: 20px;
+			border: 1px solid #888;
+			width: 80%;
+			max-width: 400px;
+			text-align: center;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		}
+
+		.modal_finalizacao-content>p {
+			border: 1px solid #ccc;
+			padding: 1rem;
+			border-radius: 0.5rem;
+			margin-bottom: 1rem;
+		}
+
+		.modal_finalizacao .btn {
+			background-color: #4CAF50;
+			color: white;
+			padding: 10px 15px;
+			border: none;
+			cursor: pointer;
+			margin: 5px;
+		}
+
+		.modal_finalizacao .btn-cancel {
+			background-color: #f44336;
+		}
+
+		.modal_finalizacao .btn:hover {
+			background-color: #45a049;
+		} */
+
+	/* Modal Styles */
+	.modal_finalizacao {
+	    display: none;
+	    position: fixed;
+	    align-items: center;
+	    justify-content: center;
+	    z-index: 1;
+	    left: 0;
+	    top: 0;
+	    width: 100%;
+	    height: 100%;
+	    background-color: rgba(0, 0, 0, 0.4);
+	}
+
+	.modal_finalizacao-content {
+	    background-color: #fefefe;
+	    margin: 15% auto;
+	    padding: 20px;
+	    border: 1px solid #888;
+	    width: 80%;
+	    max-width: 700px;
+	}
+
+	.modal_finalizacao-tabs {
+	    display: flex;
+	    align-items: center;
+	}
+
+	.modal_finalizacao-header {
+	    display: flex;
+	    justify-content: space-between;
+	    align-items: center;
+	}
+
+	
+
+	.modal_finalizacao-header > h4{
+		width:50%;
+		text-align:center;
+	}
+
+	.modal_finalizacao-close {
+	    color: #aaa;
+	    font-size: 28px;
+	    font-weight: bold;
+	    cursor: pointer;
+	}
+
+	.modal_finalizacao-close:hover,
+	.modal_finalizacao-close:focus {
+	    color: black;
+	    text-decoration: none;
+	    cursor: pointer;
+	}
+
+	.modal_finalizacao-tablink {
+	    background-color: #f1f1f1;
+	    border: none;
+	    outline: none;
+	    cursor: pointer;
+	    padding: 10px 20px;
+	    transition: background-color 0.3s;
+	    gap: 1rem;
+	    display: flex;
+	    flex-direction: row;
+	    width: 100%;
+	    justify-content: center;
+	}
+
+	.tab-buttons {
+	    gap: 1rem;
+	    display: flex;
+	    flex-direction: row;
+	    width: 100%;
+	    justify-content: space-between;
+	}
+
+
+
+	.modal_finalizacao-tablink:hover {
+	    background-color: #ddd;
+	}
+
+	.modal_finalizacao-tablink.active {
+	    background-color: #ccc;
+	}
+
+	.modal_finalizacao-tabcontent {
+	    display: none;
+	}
+
+	.form-control {
+	    width: 100%;
+	    padding: 10px;
+	    margin-top: 10px;
+	    border: 1px solid #ccc;
+	    border-radius: 4px;
+	}
+
+	.modal_finalizacao-btn-close {
+	    background-color: #f44336;
+	    color: white;
+	    padding: 10px 20px;
+	    border: none;
+	    border-radius: 4px;
+	    cursor: pointer;
+	    margin-top: 10px;
+	}
+
+	.modal_finalizacao-btn-salvar {
+	    background-color: #4CAF50;
+	    color: white;
+	    padding: 10px 20px;
+	    border: none;
+	    border-radius: 4px;
+	    cursor: pointer;
+	    margin-top: 10px;
+	    height: 100%;
+	}
+
+	.modal_finalizacao-btn:hover {
+	    background-color: #45a049;
+	}
+
+	.container-rachadinha {
+	    display: flex;
+	    flex-direction: column;
+	    overflow: hidden;
+	    overflow-y: scroll;
+	    width: 100%;
+	    gap: 1rem;
+	    background-color: #f1f1f1;
+	    height: 10rem;
+	    border-radius: 1rem;
+	    padding: 0.5rem;
+	}
+
+	.container-parcial {
+	    display: flex;
+	    flex-direction: column;
+	    overflow: hidden;
+	    overflow-y: scroll;
+	    width: 100%;
+	    gap: 1rem;
+	    background-color: #f1f1f1;
+	    height: 10rem;
+	    border-radius: 1rem;
+	    padding: 0.5rem;
+	}
+
+	.container-box-items {
+	    display: flex;
+	    align-items: center;
+	    /* justify-content: center; */
+	    width: 100%;
+	    gap: 1rem;
+
+	}
+
+	.container-box-items button:nth-of-type(1) {
+	    --vz: 3rem;
+
+	    background-color: grey;
+	    width: var(--vz);
+	    height: var(--vz);
+	    border-radius: 100rem;
+	    color: white;
+	    font-size: 2rem;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+
+	}
+
+	.container-box-items button:nth-of-type(2) {
+	    --vz: 3rem;
+
+	    background-color: grey;
+	    width: var(--vz);
+	    height: var(--vz);
+	    border-radius: 100rem;
+	    color: white;
+	    font-size: 2rem;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+
+
+	}
+
+	.container-box-items input[type='text'] {
+
+	    padding: 10px;
+	    margin-top: 10px;
+	    border: 1px solid #ccc;
+	    border-radius: 4px;
+	}
+
+	.container-box-items select {
+
+	    padding: 10px;
+	    margin-top: 10px;
+	    border: 1px solid #ccc;
+	    border-radius: 4px;
+	}
+
+	.tab-buttons-simples {
+	    width: 100%;
+	    display: flex;
+	    align-items: center;
+	    gap: 0.5rem;
+	    justify-content: center;
+	}
+
+	.info-container {
+	    width: 100%;
+	    display: flex;
+	    align-items: center;
+	    gap: 0.5rem;
+	    justify-content: center;
+	    color: red;
+	}
+
+	.grapichsModalFat {
+	    width: 100%;
+	    gap: 1rem;
+	    padding: 0.5rem 0;
+	    display: flex;
+	    flex-direction: row;
+	    gap: 0.5rem;
+	    text-align: center;
+
+	}
+
+	.grapichsModal:nth-of-type(1) {
+	    border: 2px solid #dc3545;
+	    width: 100%;
+	    color: #dc3545;
+	    padding: 2rem;
+	    border-radius: 1rem;
+	}
+
+	.grapichsModal:nth-of-type(2) {
+	    border: 2px solid #28a745;
+	    width: 100%;
+	    color: #28a745;
+	    padding: 2rem;
+	    border-radius: 1rem;
+	}
+
+	.grapichsModal:nth-of-type(3) {
+	    border: 2px solid #ffc107;
+	    width: 100%;
+	    color: #ffc107;
+	    padding: 2rem;
+	    border-radius: 1rem;
+	}
+
+	.grapichsModal p {
+	    font-size: 1.5rem;
+	    width: 100%;
+	}
+
+	/* Responsividade */
+	@media (max-width: 768px) {
+	    .modal_finalizacao-tabs {
+	        padding: 0.5rem;
+	    }
+
+	    .grapichsModalFat {
+	        display: flex;
+	        gap: 0.5rem 0;
+	        text-align: center;
+	        flex-direction: column;
+	    }
+
+	    .tab-buttons {
+	        flex-direction: column;
+	    }
+
+	    .modal_finalizacao-tablink {
+	        margin-bottom: 0.5rem;
+
+	    }
+
+	    .container-box-items {
+	        flex-direction: column;
+	    }
+
+	    .info-text,
+	    .total-text {
+	        font-size: 0.875rem;
+	    }
+
+	    .modal_finalizacao {
+	        display: none;
+	        position: fixed;
+	        align-items: center;
+	        justify-content: center;
+	        z-index: 1;
+	        left: 0;
+	        top: 0;
+	        width: 100%;
+	        height: 100%;
+	        overflow: hidden;
+	        overflow-y: scroll;
+	        background-color: rgba(0, 0, 0, 0.4);
+	    }
+
+	    /* Hide scrollbar for Chrome, Safari and Opera */
+	    .modal_finalizacao::-webkit-scrollbar {
+	        display: none;
+	    }
+
+	    /* Hide scrollbar for IE, Edge and Firefox */
+	    .modal_finalizacao {
+	        -ms-overflow-style: none;
+	        /* IE and Edge */
+	        scrollbar-width: none;
+	        /* Firefox */
+	    }
+
+	}
+
+		/* Estilos Gerais */
+		body {
+			font-family: Arial, sans-serif;
+		}
+	
+		/* Bloco de Seleção de Motoboy */
+		.bloco_motoboy {
+			background-color: white;
+			border: 1px solid #ddd;
+			border-radius: 8px;
+			padding: 20px;
+			margin: 20px 0;
+			display:flex;
+
+			flex-direction:column;
+		}
+	
+		.bloco_motoboy h2 {
+			margin-top: 0;
+			font-size: 1.5rem;
+			color: #333;
+		}
+	
+		.bloco_motoboy p {
+			font-size: 1rem;
+			color: #666;
+		}
+	
+		.bloco_motoboy .form-group {
+			margin-bottom: 15px;
+		}
+
+		#motoboyForm{
+			display:flex;
+			align-items:center;
+			width:100%;
+			height: 100%;
+		}
+		
+		#motoboyForm img{
+			min-width:30%;
+			object-fit:contain;
+			margin:0 auto;
+			width: 100%;
+		}
+
+		#motoboyFormTrocar{
+			display:flex;
+			width:100%;
+			height: 100%;
+			flex-direction: column;
+		}
+		
+
+		.bloco_motoboy .form-group label {
+			display: block;
+			font-size: 1rem;
+			margin-bottom: 5px;
+			width: 100%;
+		}
+
+		.form-group{
+			display:flex;
+			flex-direction:column;
+			gap:0.5rem;
+		}
+	
+		.bloco_motoboy .form-control {
+			width: 100%;
+			padding: 8px;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			box-sizing: border-box;
+		}
+	
+		.bloco_motoboy .btn {
+			background-color: #007bff;
+			color: white;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 1rem;
+		}
+	
+		.bloco_motoboy .btn:hover {
+			background-color: #0056b3;
+		}
+	
+		/* Bloco Alternativo */
+		.bloco_alternativo {
+			background-color: #fff3f3;
+			border: 1px solid #f5c6cb;
+			border-radius: 8px;
+			padding: 20px;
+			margin: 20px 0;
+		}
+	
+		.bloco_alternativo p {
+			color: #721c24;
+			font-size: 1rem;
+			margin: 0;
+		}
