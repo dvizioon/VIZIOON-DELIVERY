@@ -164,24 +164,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                                     if ($stmt->execute()) {
                                         echo '
-                            <div class="container mt-5">
-                                <div class="card">
-                                    <div class="card-header bg-success text-white">
-                                        <h4 class="card-title">Sucesso</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        ' . $mensagem_sucesso . '
-                                    </div>
-                                    <div class="card-footer">
-                                        <form action="../verpedido.php" method="post" class="d-flex justify-content-center">
-                                            <input type="hidden" name="codigop" value="' . htmlspecialchars($id_pedido) . '" />
-                                            <button style="cursor: pointer;" type="submit" class="btn btn-success btn-lg w-25 p-3">Voltar</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>';
-
-
+                                        <div class="container mt-5">
+                                            <div class="card">
+                                                <div class="card-header bg-success text-white">
+                                                    <h4 class="card-title">Sucesso</h4>
+                                                </div>
+                                                <div class="card-body">
+                                                    ' . $mensagem_sucesso . '
+                                                </div>
+                                                <div class="card-footer">
+                                                    <form action="../verpedido.php" method="post" class="d-flex justify-content-center">
+                                                        <input type="hidden" name="codigop" value="' . htmlspecialchars($id_pedido) . '" />
+                                                        <button style="cursor: pointer;" type="submit" class="btn btn-success btn-lg w-25 p-3">Voltar</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>';
 
                                         $update_status = $conexao->query("UPDATE pedidos SET status='5' WHERE idpedido='" . $id_pedido . "'");
                                         if (!$update_status) {
@@ -208,12 +206,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         if ($result_pedido['count'] > 0) {
                                             // Se já existe, faça a atualização
                                             $sql_pedido = "UPDATE `pedidos` 
-                   SET `comissao` = :comissao, `atendente` = :atendente 
-                   WHERE `idpedido` = :idpedido";
+                                            SET `comissao` = :comissao, `atendente` = :atendente 
+                                            WHERE `idpedido` = :idpedido";
                                         } else {
                                             // Se não existe, faça a inserção
                                             $sql_pedido = "INSERT INTO `pedidos` (`idpedido`, `comissao`, `atendente`) 
-                   VALUES (:idpedido, :comissao, :atendente)";
+                                        VALUES (:idpedido, :comissao, :atendente)";
                                         }
 
                                         // Preparar a declaração SQL
@@ -232,24 +230,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         $stmt_pedido->execute();
                                     } else {
                                         echo '
-                            <div class="container mt-5">
-                                <div class="card">
-                                    <div class="card-header bg-danger text-white">
-                                        <h4 class="card-title">Erro</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="alert alert-danger" role="alert">
-                                            <strong>Erro ao atualizar pagamento:</strong> ' . htmlspecialchars($stmt->error) . '
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <form action="../verpedido.php" method="post" class="d-flex justify-content-center">
-                                            <input type="hidden" name="codigop" value="' . htmlspecialchars($id_pedido) . '" />
-                                            <button style="cursor: pointer;" type="submit" class="btn btn-danger btn-lg w-25 p-3">Voltar</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>';
+                                            <div class="container mt-5">
+                                                <div class="card">
+                                                    <div class="card-header bg-danger text-white">
+                                                        <h4 class="card-title">Erro</h4>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="alert alert-danger" role="alert">
+                                                            <strong>Erro ao atualizar pagamento:</strong> ' . htmlspecialchars($stmt->error) . '
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <form action="../verpedido.php" method="post" class="d-flex justify-content-center">
+                                                            <input type="hidden" name="codigop" value="' . htmlspecialchars($id_pedido) . '" />
+                                                            <button style="cursor: pointer;" type="submit" class="btn btn-danger btn-lg w-25 p-3">Voltar</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>';
                                     }
                                     $stmt->close();
                                 }
@@ -281,47 +279,58 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     );
                                     if ($stmt->execute()) {
                                         echo '
-                            <div class="container mt-5">
-                                <div class="card">
-                                    <div class="card-header bg-success text-white">
-                                        <h4 class="card-title">Sucesso</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        ' . $mensagem_sucesso . '
-                                    </div>
-                                    <div class="card-footer">
-                                        <form action="../verpedido.php" method="post" class="d-flex justify-content-center">
-                                            <input type="hidden" name="codigop" value="' . htmlspecialchars($id_pedido) . '" />
-                                            <button style="cursor: pointer;" type="submit" class="btn btn-success btn-lg w-25 p-3">Voltar</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>';
+                                            <div class="container mt-5">
+                                                <div class="card">
+                                                    <div class="card-header bg-success text-white">
+                                                        <h4 class="card-title">Sucesso</h4>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        ' . $mensagem_sucesso . '
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <form action="../verpedido.php" method="post" class="d-flex justify-content-center">
+                                                            <input type="hidden" name="codigop" value="' . htmlspecialchars($id_pedido) . '" />
+                                                            <button style="cursor: pointer;" type="submit" class="btn btn-success btn-lg w-25 p-3">Voltar</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>';
                                     } else {
                                         echo '
-                            <div class="container mt-5">
-                                <div class="card">
-                                    <div class="card-header bg-danger text-white">
-                                        <h4 class="card-title">Erro</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="alert alert-danger" role="alert">
-                                            <strong>Erro ao inserir pagamento:</strong> ' . htmlspecialchars($stmt->error) . '
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <form action="../verpedido.php" method="post" class="d-flex justify-content-center">
-                                            <input type="hidden" name="codigop" value="' . htmlspecialchars($id_pedido) . '" />
-                                            <button style="cursor: pointer;" type="submit" class="btn btn-danger btn-lg w-25 p-3">Voltar</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>';
+                                            <div class="container mt-5">
+                                                <div class="card">
+                                                    <div class="card-header bg-danger text-white">
+                                                        <h4 class="card-title">Erro</h4>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="alert alert-danger" role="alert">
+                                                            <strong>Erro ao inserir pagamento:</strong> ' . htmlspecialchars($stmt->error) . '
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <form action="../verpedido.php" method="post" class="d-flex justify-content-center">
+                                                            <input type="hidden" name="codigop" value="' . htmlspecialchars($id_pedido) . '" />
+                                                            <button style="cursor: pointer;" type="submit" class="btn btn-danger btn-lg w-25 p-3">Voltar</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>';
                                     }
                                     $stmt->close();
                                 }
                             }
                         } else {
+
+                            $update_status = $conexao->query("UPDATE pedidos SET status='5' WHERE idpedido='" . $id_pedido . "'");
+                            if (!$update_status) {
+                                echo "Erro ao atualizar o status da mesa: " . $conexao->error;
+                            }
+
+                            $update_mesa = $conexao->query("UPDATE pedidos SET mesa='0' WHERE idpedido='" . $id_pedido . "'");
+                            if (!$update_mesa) {
+                                echo "Erro ao atualizar a mesa: " . $conexao->error;
+                            }
+
                             echo
                             '
                             <div class="container mt-5">

@@ -263,11 +263,17 @@ if (isset($_POST["produto"])) {
         }
     }
 
+    if (isset($_POST['nome_produto'])) {
+        $_SESSION['nomeprt'] = $_POST['nome_produto'];
+    }
+
+
     if ($stmt) {
-        header("location: ../pdvpedido.php?idpedido=" . $id_cliente);
+        header("location: ../pdvpedidoeditar.php?idpedido=" . $id_cliente);
         exit;
     }
 }
+
 
 if (isset($_GET["up"])) {
     $file = $_GET["up"];

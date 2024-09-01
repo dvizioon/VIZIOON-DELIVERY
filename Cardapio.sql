@@ -433,6 +433,23 @@ CREATE TABLE `produtos` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `cozinha`
+--
+
+
+CREATE TABLE `cozinha` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idu` int(11) NOT NULL,
+  `idpedido` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
+  `data` varchar(100) NOT NULL,
+  `status_cozinha` ENUM('entregue', 'fazendo' ,'finalizado' ,'parado') NOT NULL DEFAULT 'parado',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `store`
 --
 
@@ -452,6 +469,9 @@ CREATE TABLE `store` (
 
 ALTER TABLE `store`
 ADD COLUMN `pedido_entregue` ENUM('sim', 'nao') NOT NULL DEFAULT 'nao';
+
+ALTER TABLE `store`
+ADD COLUMN `pedido_entregue_funcionario` ENUM('sim', 'nao') NOT NULL DEFAULT 'nao';
 
 ALTER TABLE `store`
 ADD COLUMN `referencia` varchar(100) NOT NULL;
@@ -477,6 +497,9 @@ CREATE TABLE `store_o` (
 
 ALTER TABLE `store_o`
 ADD COLUMN `pedido_entregue` ENUM('sim', 'nao') NOT NULL DEFAULT 'nao';
+
+ALTER TABLE `store_o`
+ADD COLUMN `pedido_entregue_funcionario` ENUM('sim', 'nao') NOT NULL DEFAULT 'nao';
 
 ALTER TABLE `store_o`
 ADD COLUMN `id_referencia` varchar(100) NOT NULL;

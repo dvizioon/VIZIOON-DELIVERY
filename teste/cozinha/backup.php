@@ -112,7 +112,7 @@ if ($idpedido) {
             ";
 
 			$stmt_insert = $connect->prepare($insert_query);
-			$stmt_insert->bindParam(':idu', $cod_id, PDO::PARAM_INT);
+			$stmt_insert->bindParam(':idu', $resultado['store_id'], PDO::PARAM_INT);
 			$stmt_insert->bindParam(':idpedido', $resultado['idpedido'], PDO::PARAM_STR);
 			$stmt_insert->execute();
 
@@ -290,18 +290,18 @@ if (isset($_POST['entregar_tudo'])) {
 									// Todos os itens foram entregues
 
 									// Atualizar a tabela cozinha para refletir que o pedido foi entregue
-									// $stmt_update_cozinha = $connect->prepare("UPDATE cozinha SET status_cozinha='entregue' WHERE idpedido=:idpedido");
-									// $stmt_update_cozinha->bindParam(':idpedido', $idpedido, PDO::PARAM_STR);
-									// $stmt_update_cozinha->execute();
+									$stmt_update_cozinha = $connect->prepare("UPDATE cozinha SET status_cozinha='entregue' WHERE idpedido=:idpedido");
+									$stmt_update_cozinha->bindParam(':idpedido', $idpedido, PDO::PARAM_STR);
+									$stmt_update_cozinha->execute();
 
-									// // Atualizar o status do pedido para "entregue"
-									// $stmt_update_pedido = $connect->prepare("UPDATE pedidos SET status='7' WHERE idpedido=:idpedido");
-									// $stmt_update_pedido->bindParam(':idpedido', $idpedido, PDO::PARAM_INT);
-									// $stmt_update_pedido->execute();
+									// Atualizar o status do pedido para "entregue"
+									$stmt_update_pedido = $connect->prepare("UPDATE pedidos SET status='7' WHERE idpedido=:idpedido");
+									$stmt_update_pedido->bindParam(':idpedido', $idpedido, PDO::PARAM_INT);
+									$stmt_update_pedido->execute();
 
 
-									// header("Location: tela.php");
-									// exit();
+									header("Location: tela.php");
+									exit();
 
 									echo '<div class="col-lg-12 mg-b-20">
 											<div class="card card-info form-container">
@@ -336,9 +336,9 @@ if (isset($_POST['entregar_tudo'])) {
 															<div class="col-md-3">
 																<span class="tx-12"><?= htmlspecialchars($pedidossx->data); ?></span><br>
 																<span class="tx-12"><?= htmlspecialchars($pedidossx->hora); ?></span><br>
-															</div>
+														</div>
 															<div class="col-md-4">
-																<?php
+																	<?php
 																$check_query = "SELECT status_cozinha FROM cozinha WHERE idpedido = :idpedido LIMIT 1";
 																$stmt_check = $connect->prepare($check_query);
 																$stmt_check->bindParam(':idpedido', $idpedido, PDO::PARAM_STR);
@@ -427,14 +427,10 @@ if (isset($_POST['entregar_tudo'])) {
 																		</span><br />
 
 																	<?php } ?>
-																	<?php
-																		if($cozinha_result){
-																			echo "<div class='checkbox-wrapper'>
-																				<input type='checkbox' name='itens[]' value='".htmlspecialchars($carpro2->id)."'>
-																			</div>";
-																		}
-																	?>
-																	
+
+																	<div class="checkbox-wrapper">
+																		<input type="checkbox" name="itens[]" value="<?= htmlspecialchars($carpro2->id); ?>">
+																	</div>
 
 																</div>
 															<?php } ?>

@@ -44,7 +44,7 @@ if ($produtoscx > 0) {
 
 //
 
-if (isset($_POST["pedidobalcao"])) {
+if (isset($_POST["pedidomesa"])) {
 	$nome 			= $_POST['nome'];
 	$wps  			= $_POST['wps'];
 	$fmpgto  		= "MESA";
@@ -81,7 +81,7 @@ if (isset($_POST["pedidobalcao"])) {
 	$update = $connect->query("UPDATE store SET status='1' WHERE idsecao='$id_cliente'");
 	$update = $connect->query("UPDATE store_o SET status='1' WHERE ids='$id_cliente'");
 	$stmt_pedido->execute();
-	
+
 	if ($update) {
 		header("location: pdv.php");
 		exit;
@@ -160,7 +160,7 @@ if (isset($_POST["pedidobalcao"])) {
 							</div>
 							<br>
 							<form action="" method="post">
-								<input type="hidden" name="pedidobalcao">
+								<input type="hidden" name="pedidomesa">
 
 								<div class="row">
 

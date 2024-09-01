@@ -112,19 +112,21 @@ class TodoListComponent
     private $connect;
     private $cod_id;
     private $idpedido;
+    private $atualizar_pedido_entregue;
 
-    public function __construct($connect, $cod_id, $idpedido = null)
+    public function __construct($connect, $cod_id, $idpedido = null, $atualizar_pedido_entregue = true)
     {
         $this->connect = $connect;
         $this->cod_id = $cod_id;
         $this->idpedido = $idpedido;
+        $this->atualizar_pedido_entregue = $atualizar_pedido_entregue;
     }
 
     // Método para obter todos os pedidos, filtrando por idpedido se fornecido
     private function getOrders()
     {
         $query = "
-            SELECT s.id, s.idpedido, s.valor, s.pedido_entregue, p.nome 
+            SELECT s.id, s.idpedido, s.valor, s.pedido_entregue, s.pedido_entregue_funcionario, p.nome 
             FROM store s
             INNER JOIN produtos p ON s.produto_id = p.id
             WHERE s.idu = :idu";
@@ -144,43 +146,66 @@ class TodoListComponent
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Método para marcar pedidos como entregues
+    // Método para marcar pedidos como entregues pelo funcionário
     private function resolveOrders($pedidos_resolvidos)
     {
         foreach ($pedidos_resolvidos as $id) {
-            $update_query = "UPDATE store SET pedido_entregue = 'sim' WHERE id = :id AND idu = :idu";
+            $update_query = "UPDATE store SET pedido_entregue_funcionario = 'sim'";
+
+            if ($this->atualizar_pedido_entregue) {
+                $update_query .= ", pedido_entregue = 'sim'";
+            }
+
+            $update_query .= " WHERE id = :id AND idu = :idu";
+
             $stmt_update = $this->connect->prepare($update_query);
             $stmt_update->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt_update->bindParam(':idu', $this->cod_id, PDO::PARAM_INT);
             $stmt_update->execute();
         }
+
         // Redirecionar para evitar o reenvio do formulário
         echo '<form id="autoRedirectForm" action="./verpedido.php" method="post">';
         echo '<input type="hidden" name="codigop" value="' . htmlspecialchars($_POST['codigop']) . '" />';
         echo '</form>';
         echo '<script type="text/javascript">
-            document.getElementById("autoRedirectForm").submit();
-          </script>';
+        document.getElementById("autoRedirectForm").submit();
+    </script>';
         exit;
     }
 
-    // Método para desmarcar pedidos como entregues
+    // Método para desmarcar pedidos como entregues pelo funcionário e atualizar o status do pedido
     private function reopenOrders($pedidos_reabertos)
     {
         foreach ($pedidos_reabertos as $id) {
-            $update_query = "UPDATE store SET pedido_entregue = 'nao' WHERE id = :id AND idu = :idu";
+            $update_query = "UPDATE store SET pedido_entregue_funcionario = 'nao'"; // Corrigi a sintaxe aqui, fechando a string corretamente.
+
+            if ($this->atualizar_pedido_entregue) {
+                $update_query .= ", pedido_entregue = 'nao'";
+            }
+
+            $update_query .= " WHERE id = :id AND idu = :idu";
+
             $stmt_update = $this->connect->prepare($update_query);
             $stmt_update->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt_update->bindParam(':idu', $this->cod_id, PDO::PARAM_INT);
             $stmt_update->execute();
         }
+
+        // Atualiza o status do pedido para "2" se algum pedido foi reaberto
+        if ($this->idpedido !== null) {
+            $stmt_update_pedido = $this->connect->prepare("UPDATE pedidos SET status = '2' WHERE idpedido = :idpedido");
+            $stmt_update_pedido->bindParam(':idpedido', $this->idpedido, PDO::PARAM_INT);
+            $stmt_update_pedido->execute();
+        }
+
         // Redirecionar para evitar o reenvio do formulário
         echo '<form id="autoRedirectForm" action="./verpedido.php" method="post">';
         echo '<input type="hidden" name="codigop" value="' . htmlspecialchars($_POST['codigop']) . '" />';
         echo '</form>';
         echo '<script type="text/javascript">
-            document.getElementById("autoRedirectForm").submit();
-          </script>';
+        document.getElementById("autoRedirectForm").submit();
+    </script>';
         exit;
     }
 
@@ -196,15 +221,25 @@ class TodoListComponent
         }
 
         $pedidos = $this->getOrders();
+        $tem_pedido_pendente = false;
 
         if ($pedidos) {
             echo '<form method="post" action="./verpedido.php">';
+            // Botão para reabrir pedidos na cozinha
+            // echo '<div class="reopen-section">';
+            // echo '<button type="submit" class="btn-reopen-all bg-danger btn btn-block rounded">Reabrir Selecionados na Cozinha</button>';
+            // echo '</div>';
+
             echo '<div class="todo-list">';
             echo '<ul>';
             foreach ($pedidos as $pedido) {
-                $class = $pedido['pedido_entregue'] === 'sim' ? 'pedido-entregue' : '';
-                $checkbox = $pedido['pedido_entregue'] === 'nao' ? '<input type="checkbox" name="pedidos_resolvidos[]" value="' . htmlspecialchars($pedido['id']) . '"> ' : '';
-                $reopen_button = $pedido['pedido_entregue'] === 'sim' ? '<button type="submit" name="pedidos_reabertos[]" value="' . htmlspecialchars($pedido['id']) . '" class="btn-reopen">Reabrir Pedido</button>' : '';
+                $class = $pedido['pedido_entregue_funcionario'] === 'sim' ? 'pedido-entregue-funcionario' : '';
+                $checkbox = $pedido['pedido_entregue_funcionario'] === 'nao' ? '<input type="checkbox" name="pedidos_resolvidos[]" value="' . htmlspecialchars($pedido['id']) . '"> ' : '';
+                $reopen_button = $pedido['pedido_entregue_funcionario'] === 'sim' ? '<button type="submit" name="pedidos_reabertos[]" value="' . htmlspecialchars($pedido['id']) . '" class="btn-reopen">Reabrir Entrega</button>' : '';
+
+                if ($pedido['pedido_entregue_funcionario'] === 'nao') {
+                    $tem_pedido_pendente = true;
+                }
 
                 echo '<li class="' . $class . '">';
                 echo '<label>';
@@ -217,7 +252,12 @@ class TodoListComponent
             }
             echo '</ul>';
             echo '<input type="hidden" name="codigop" value="' . htmlspecialchars($this->idpedido) . '" />';
-            echo $pedido['pedido_entregue'] === 'nao' ? '<button type="submit" class="btn-resolver">Resolver Pedidos</button>' : '';
+
+            // Exibe o botão se houver algum pedido pendente
+            if ($tem_pedido_pendente) {
+                echo '<button type="submit" class="btn-resolver">Confirma Entrega</button>';
+            }
+
             echo '</div>';
             echo '</form>';
         } else {
@@ -225,6 +265,5 @@ class TodoListComponent
         }
     }
 }
-
 
 ?>
