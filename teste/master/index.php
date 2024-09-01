@@ -3,22 +3,27 @@ session_start();
 require_once "../../funcoes/Conexao.php";
 require_once "../../funcoes/Key.php";
 require_once "../db/base.php";
+
 $site = HOME;
 
-
-
 if (isset($_POST["loginCPF"])) {
-	$login_cpf 	     = $_POST['loginCPF'];
-	$login_sn1 		 = $_POST['loginSENHA'];
-	$login_snh 		 = sha1($login_sn1);
-	$buscauser       = $connect->query("SELECT id, url FROM config WHERE cpf='$login_cpf' AND senha='$login_snh' AND status='1'");
-	$count_user      = $buscauser->rowCount();
-	if ($count_user  <= 0) {
+	$login_cpf = $_POST['loginCPF'];
+	$login_sn1 = $_POST['loginSENHA'];
+	$login_snh = sha1($login_sn1);
+
+	$buscauser = $connect->prepare("SELECT id, url FROM config WHERE cpf = :cpf AND senha = :senha AND status = '1'");
+	$buscauser->bindParam(':cpf', $login_cpf);
+	$buscauser->bindParam(':senha', $login_snh);
+	$buscauser->execute();
+
+	$count_user = $buscauser->rowCount();
+	if ($count_user <= 0) {
 		header("location: ./?erro=login");
 		exit;
 	}
-	$dadoscliente 	 = $buscauser->fetch(PDO::FETCH_OBJ);
-	$comparaid		 = $dadoscliente->url;
+
+	$dadoscliente = $buscauser->fetch(PDO::FETCH_OBJ);
+	$comparaid = $dadoscliente->url;
 	$tagsArray = explode('/', $site);
 	$termo = $comparaid;
 
@@ -34,7 +39,7 @@ if (isset($_POST["loginCPF"])) {
 		exit;
 	}
 
-	if ($count_user 	>= 1) {
+	if ($count_user >= 1) {
 		$_SESSION["cod_id"] = $dadoscliente->id;
 		$cookie_cel = "pdvx";
 		$cookie_value2 = $dadoscliente->id;
@@ -55,17 +60,72 @@ if (isset($_POST["loginCPF"])) {
 	<title>:: PAINEL ADMINISTRATIVO ::</title>
 	<link href="../lib/font-awesome/css/font-awesome.css" rel="stylesheet">
 	<link href="../lib/Ionicons/css/ionicons.css" rel="stylesheet">
-
-	<!-- Slim CSS -->
 	<link rel="stylesheet" href="../css/slim.css">
 
+	<style>
+		.logomaca {
+			width: 100%;
+			/* background-color: red; */
+			padding: 1rem;
+			overflow: hidden;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			
+		}
+
+		.logomaca img {
+			width: 10rem;
+			border-radius: 1rem;
+			-webkit-user-drag: none;
+			-moz-window-dragging: none;
+			user-select: none;
+		}
+	</style>
 </head>
 
 <body>
-
 	<div class="signin-wrapper">
+		<?php
+		// Analisa a URL e extrai o componente do caminho
+		$parsedUrl = parse_url($site);
+		$path = isset($parsedUrl['path']) ? $parsedUrl['path'] : '';
+		$path = trim($path, '/');
+		$pathParts = explode('/', $path);
 
+		?>
 		<div class="signin-box" align="center">
+			<?php
+
+			if (!empty($pathParts[0])) {
+				$nome = $pathParts[0];
+
+				$query_configuracoes = $connect->prepare("SELECT * FROM config WHERE url = :url");
+				$query_configuracoes->bindParam(':url', $nome);
+				$query_configuracoes->execute();
+				$result = $query_configuracoes->fetch(PDO::FETCH_ASSOC);
+
+				if ($result) {
+					$idu_empresa = $result['id'];
+
+					$logo_empresa = $connect->prepare("SELECT foto FROM logo WHERE idu = :idu ORDER BY id DESC LIMIT 1");
+					$logo_empresa->bindParam(':idu', $idu_empresa);
+					$logo_empresa->execute();
+					$dadoslogo = $logo_empresa->fetch(PDO::FETCH_OBJ);
+
+					if ($dadoslogo) {
+
+						echo '<div class="logomaca">
+								<img src="../img/logomarca/' . htmlspecialchars($dadoslogo->foto) . '" />
+							 </div>';
+						// echo '<img src="../img/logomarca/' . htmlspecialchars($dadoslogo->foto) . '" width="350" />';
+					} else {
+						echo "Logo não encontrado.";
+					}
+				}
+			}
+
+			?>
 			<h3 class="slim-logo">Painel do Cliente<span></h3>
 			<form action="" method="post">
 				<div class="form-group">
@@ -81,7 +141,7 @@ if (isset($_POST["loginCPF"])) {
 				<?php } ?>
 				<button type="submit" class="btn btn-primary btn-block btn-signin">Entrar</button>
 			</form>
-			<p class="mg-b-0">Esqueceu sua senha? <a href="recuperar.php">Clique aqui...</a></p>
+			<!-- <p class="mg-b-0">Esqueceu sua senha? <a href="recuperar.php">Clique aqui...</a></p> -->
 		</div>
 	</div>
 </body>

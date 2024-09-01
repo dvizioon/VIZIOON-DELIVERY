@@ -321,6 +321,13 @@ include_once('../../funcoes/Key.php');
           <h3>Painel Funcionario ⇢ <?php echo $_SESSION['nome_funcionario']; ?></h3>
         </div>
         <hr>
+
+        <?php
+
+          require("./mostrarAlertCozinha.php");
+
+        ?>
+
         <div class="container mt-5">
           <!-- Nav tabs -->
           <!-- <ul class="nav nav-tabs" id="pedidoTabs" role="tablist">
@@ -390,6 +397,7 @@ include_once('../../funcoes/Key.php');
               </a>
             </li>
           </ul>
+
 
           <!-- Tab panes -->
           <?php

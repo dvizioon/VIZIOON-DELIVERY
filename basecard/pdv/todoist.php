@@ -164,6 +164,18 @@ class TodoListComponent
             $stmt_update->execute();
         }
 
+        // Atualiza a cozinha para finalizando quando o pedido for fechado
+        if ($this->idpedido !== null) {
+
+            $stmt_update_pedido = $this->connect->prepare("UPDATE pedidos SET status = '2' WHERE idpedido = :idpedido");
+            $stmt_update_pedido->bindParam(':idpedido', $this->idpedido, PDO::PARAM_INT);
+            $stmt_update_pedido->execute();
+
+            $stmt_update_cozinha = $this->connect->prepare("UPDATE cozinha SET status_cozinha='finalizado' WHERE idpedido=:idpedido");
+            $stmt_update_cozinha->bindParam(':idpedido', $this->idpedido, PDO::PARAM_STR);
+            $stmt_update_cozinha->execute();
+        }
+
         // Redirecionar para evitar o reenvio do formulário
         echo '<form id="autoRedirectForm" action="./verpedido.php" method="post">';
         echo '<input type="hidden" name="codigop" value="' . htmlspecialchars($_POST['codigop']) . '" />';
@@ -178,7 +190,7 @@ class TodoListComponent
     private function reopenOrders($pedidos_reabertos)
     {
         foreach ($pedidos_reabertos as $id) {
-            $update_query = "UPDATE store SET pedido_entregue_funcionario = 'nao'"; // Corrigi a sintaxe aqui, fechando a string corretamente.
+            $update_query = "UPDATE store SET pedido_entregue_funcionario = 'nao'";
 
             if ($this->atualizar_pedido_entregue) {
                 $update_query .= ", pedido_entregue = 'nao'";
@@ -197,6 +209,10 @@ class TodoListComponent
             $stmt_update_pedido = $this->connect->prepare("UPDATE pedidos SET status = '2' WHERE idpedido = :idpedido");
             $stmt_update_pedido->bindParam(':idpedido', $this->idpedido, PDO::PARAM_INT);
             $stmt_update_pedido->execute();
+
+            $stmt_update_cozinha = $this->connect->prepare("UPDATE cozinha SET status_cozinha='fazendo' WHERE idpedido=:idpedido");
+            $stmt_update_cozinha->bindParam(':idpedido', $this->idpedido, PDO::PARAM_STR);
+            $stmt_update_cozinha->execute();
         }
 
         // Redirecionar para evitar o reenvio do formulário
@@ -204,10 +220,11 @@ class TodoListComponent
         echo '<input type="hidden" name="codigop" value="' . htmlspecialchars($_POST['codigop']) . '" />';
         echo '</form>';
         echo '<script type="text/javascript">
-        document.getElementById("autoRedirectForm").submit();
-    </script>';
+    document.getElementById("autoRedirectForm").submit();
+</script>';
         exit;
     }
+
 
     // Método para renderizar o componente To-Do List
     public function render()

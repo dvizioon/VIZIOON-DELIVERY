@@ -169,8 +169,8 @@ CREATE TABLE `bairros` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 
-
 -- --------------------------------------------------------
+
 
 --
 -- Estrutura para tabela `banner`

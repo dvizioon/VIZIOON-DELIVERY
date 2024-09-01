@@ -74,14 +74,73 @@ if (isset($_POST["loginCPF"])) {
 
 	<!-- Slim CSS -->
 	<link rel="stylesheet" href="../css/slim.css">
+	<style>
+		.logomaca {
+			width: 100%;
+			/* background-color: red; */
+			padding: 1rem;
+			overflow: hidden;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 
+		}
+
+		.logomaca img {
+			width: 10rem;
+			border-radius: 1rem;
+			-webkit-user-drag: none;
+			-moz-window-dragging: none;
+			user-select: none;
+		}
+	</style>
 </head>
 
 <body>
 
+	<?php
+	// Analisa a URL e extrai o componente do caminho
+	$parsedUrl = parse_url($site);
+	$path = isset($parsedUrl['path']) ? $parsedUrl['path'] : '';
+	$path = trim($path, '/');
+	$pathParts = explode('/', $path);
+
+	?>
+
 	<div class="signin-wrapper">
 
 		<div class="signin-box" align="center">
+			<?php
+
+			if (!empty($pathParts[0])) {
+				$nome = $pathParts[0];
+
+				$query_configuracoes = $connect->prepare("SELECT * FROM config WHERE url = :url");
+				$query_configuracoes->bindParam(':url', $nome);
+				$query_configuracoes->execute();
+				$result = $query_configuracoes->fetch(PDO::FETCH_ASSOC);
+
+				if ($result) {
+					$idu_empresa = $result['id'];
+
+					$logo_empresa = $connect->prepare("SELECT foto FROM logo WHERE idu = :idu ORDER BY id DESC LIMIT 1");
+					$logo_empresa->bindParam(':idu', $idu_empresa);
+					$logo_empresa->execute();
+					$dadoslogo = $logo_empresa->fetch(PDO::FETCH_OBJ);
+
+					if ($dadoslogo) {
+
+						echo '<div class="logomaca">
+								<img src="../img/logomarca/' . htmlspecialchars($dadoslogo->foto) . '" />
+							 </div>';
+						// echo '<img src="../img/logomarca/' . htmlspecialchars($dadoslogo->foto) . '" width="350" />';
+					} else {
+						echo "Logo não encontrado.";
+					}
+				}
+			}
+
+			?>
 			<h3 class="slim-logo">Painel PDV<span></h3>
 			<form action="" method="post">
 				<div class="form-group">
