@@ -866,12 +866,12 @@ $atendente_fechador_pedido = $pedidoData['atendente_fechador'];
 									<div style="display:flex; width:100%;margin-bottom:0.6rem;gap:0.5rem">
 										<?php
 										require_once("./todoist.php");
-										
+
 										if (isset($cod_id)) {
-										    $todoList = new TodoListComponent($connect, $cod_id, $pedido->idpedido);
-										    $todoList->render();
+											$todoList = new TodoListComponent($connect, $cod_id, $pedido->idpedido);
+											$todoList->render();
 										} else {
-										    echo '<div class="alert alert-danger">Erro: Você não está autorizado a acessar esta página.</div>';
+											echo '<div class="alert alert-danger">Erro: Você não está autorizado a acessar esta página.</div>';
 										}
 
 										?>
@@ -993,12 +993,12 @@ $atendente_fechador_pedido = $pedidoData['atendente_fechador'];
 										echo '<table class="table gap-1">';
 										echo '<thead>';
 										echo '<tr>
-									<th>ID</th>
-									<th>Cliente</th>
-									<th>Data</th>
-									<th>Status</th>
-									<th></th>
-								</tr>';
+												<th>ID</th>
+												<th>Cliente</th>
+												<th>Data</th>
+												<th>Status</th>
+												<th></th>
+												</tr>';
 										echo '</thead>';
 										echo '<tbody>';
 
@@ -1019,9 +1019,9 @@ $atendente_fechador_pedido = $pedidoData['atendente_fechador'];
 											echo '<td title=' . htmlspecialchars($data_search) . '>' . htmlspecialchars($texto_truncado_data) . '</td>';
 											echo '<td class="bg-success text-light text-center">' . htmlspecialchars('pago') . '</td>';
 											echo '<td class="text-info text-center bg-info"><form action="./historicopagamento.php" method="post">
-								<input type="hidden" name="id_pedido" value="' . htmlspecialchars($row['idpedido']) . '" />
-								<button style="cursor: pointer;" type="submit" class="btn btn-info w-100 btn-sm"><i class="fa fa-search"></i></button>
-								</form></td>';
+									<input type="hidden" name="id_pedido" value="' . htmlspecialchars($row['idpedido']) . '" />
+									<button style="cursor: pointer;" type="submit" class="btn btn-info w-100 btn-sm"><i class="fa fa-search"></i></button>
+									</form></td>';
 
 											echo '</tr>';
 										}
@@ -1074,6 +1074,7 @@ $atendente_fechador_pedido = $pedidoData['atendente_fechador'];
 						<?php }; ?>
 
 					<?php  } else if ($status_parcial === "1") { ?>
+
 					<?php  } else if ($status_parcial === "2") { ?>
 						<!-- Se o Status parcial existe ou seja o registro de pagamento  -->
 						<div class="col-md-6">
@@ -1296,10 +1297,10 @@ $atendente_fechador_pedido = $pedidoData['atendente_fechador'];
 											$nomepro  = $connect->query("SELECT nome FROM produtos WHERE id = '" . $carpro->produto_id . "'");
 											$nomeprox = $nomepro->fetch(PDO::FETCH_OBJ);
 											// var_dump($carpro->pedido_entregue);
-											
+
 										?>
-								
-											<p style="margin-left:10px;" align="left"><span class="tx-12"><b>** Item: </b><?php print $nomeprox->nome; ?> <?php echo isset($carpro->pedido_entregue) ? ($carpro->pedido_entregue == "sim" ? " ✔" : "") : null; ?></span></p>
+
+											<p style="margin-left:10px;" align="left"><span class="tx-12"><b>** Item: </b><?php print $nomeprox->nome; ?> <?php echo isset($carpro->pedido_entregue_funcionario) ? ($carpro->pedido_entregue_funcionario == "sim" ? " ✔" : "") : null; ?></span></p>
 
 											<?php if ($carpro->tamanho != "N") { ?>
 												<p style="margin-left:10px;" align="left"><span class="tx-12"><b>- Tamanho: </b><?php print $carpro->tamanho; ?></span></p>
@@ -1669,199 +1670,227 @@ $atendente_fechador_pedido = $pedidoData['atendente_fechador'];
 									$nomeprox2 = $nomepro2->fetch(PDO::FETCH_OBJ);
 								?>
 
-									<p style="margin-left:10px;" align="left"><span class="tx-12"><b>** Item:</b> <?php print $nomeprox2->nome; ?></span></p>
+									<?php
+									// var_dump($carpro2->pedido_entregue);
+									?>
 
-									<?php if ($carpro2->tamanho != "N") { ?>
+									<?php
+										if ($carpro2->pedido_entregue_funcionario == "nao") {
+									?>
 
-										<p style="margin-left:10px;" align="left"><span class="tx-12"><b>- Tamanho:</b> <?php print $carpro2->tamanho; ?></span></p>
+											<div class="<?php echo $carpro2->pedido_entregue == "sim" ? "border-success rounded my-2 position-relative" : "" ?>" style="<?php echo $carpro2->pedido_entregue == "sim" ? "border:2px solid" : "" ?>">
+												<p style="margin-left:10px;" align="left"><span class="tx-12"><b>** Item:</b> <?php print $nomeprox2->nome; ?></span></p>
 
-									<?php } ?>
+												<?php
+													if ($carpro2->pedido_entregue == "sim") {
+														echo '<div class="bg-dark text-light rounded" style="position:absolute;top:0;margin:0.5rem 0 0 0;right:2%;padding:0.5rem;font-size:1rem;">
+																<i class="fa fa-cutlery" aria-hidden="true"></i>
+															  </div>';
+													};
+												
+												?>
+												
 
-									<p style="margin-left:10px;" align="left"><span class="tx-12"><b>- Qnt:</b> <?php print $carpro2->quantidade; ?></span></p>
+												<?php if ($carpro2->tamanho != "N") { ?>
 
-									<?php if ($carpro2->obs) { ?>
-										<p style="margin-left:10px;" align="left"><span class="tx-12"><b>- Obs:</b> <?php echo $carpro2->obs; ?></span></p>
-									<?php } else { ?>
-										<p style="margin-left:10px;" align="left"><span class="tx-12"><b>- Obs:</b> Não</span></p>
+													<p style="margin-left:10px;" align="left"><span class="tx-12"><b>- Tamanho:</b> <?php print $carpro2->tamanho; ?></span></p>
+
+												<?php } ?>
+
+												<p style="margin-left:10px;" align="left"><span class="tx-12"><b>- Qnt:</b> <?php print $carpro2->quantidade; ?></span></p>
+
+												<?php if ($carpro2->obs) { ?>
+													<p style="margin-left:10px;" align="left"><span class="tx-12"><b>- Obs:</b> <?php echo $carpro2->obs; ?></span></p>
+												<?php } else { ?>
+													<p style="margin-left:10px;" align="left"><span class="tx-12"><b>- Obs:</b> Não</span></p>
+												<?php } ?>
+
+												<?php
+												$meiom2  = $connect->query("SELECT * FROM store_o WHERE idp = '" . $carpro2->idpedido . "' AND status = '1' AND idu='$cod_id' AND meioameio='1'AND id_referencia='" . $carpro2->referencia . "'");
+												$meiomc2 = $meiom2->rowCount();
+												?>
+
+												<?php if ($meiomc2 > 0) { ?>
+													<p style="margin-left:10px;" align="left"><span class="tx-12"><b>* <?= $meiomc2; ?> Sabores:</b></span></p>
+													<p style="margin-left:10px;" align="left"><span class="tx-12">
+															<?php while ($meiomv2 = $meiom2->fetch(PDO::FETCH_OBJ)) { ?>
+																<?= $meiomv2->nome . "<br>"; ?>
+															<?php } ?>
+														</span></p>
+												<?php } ?>
+
+												<?php
+												$adcionais2  = $connect->query("SELECT * FROM store_o WHERE idp = '" . $carpro2->idpedido . "' AND status = '1' AND idu='$cod_id' AND meioameio='0' AND id_referencia='$carpro2->referencia' ");
+												$adcionaisc2 = $adcionais2->rowCount();
+												// print $adcionaisc2;
+												?>
+
+												<?php if ($adcionaisc2 > 0) { ?>
+													<p style="margin-left:10px;" align="left"><span class="tx-12"><b>* Adicionais/Ingredientes:</b></p>
+													<p style="margin-left:10px;" align="left"><span class="tx-12">
+															<?php while ($adcionaisv2 = $adcionais2->fetch(PDO::FETCH_OBJ)) { ?>
+																<?= "- " . $adcionaisv2->nome . "<br>"; ?>
+															<?php } ?>
+														</span></p>
+												<?php } ?>
+												<center>=========================</center>
+												</p>
+											</div>
+
+									<?php
+
+										}
+
+									?>
+
+									<div>
 									<?php } ?>
 
 									<?php
-									$meiom2  = $connect->query("SELECT * FROM store_o WHERE idp = '" . $carpro2->idpedido . "' AND status = '1' AND idu='$cod_id' AND meioameio='1'AND id_referencia='" . $carpro2->referencia . "'");
-									$meiomc2 = $meiom2->rowCount();
+									$nome = str_replace('%20', ' ', $pedido->nome);
 									?>
-
-									<?php if ($meiomc2 > 0) { ?>
-										<p style="margin-left:10px;" align="left"><span class="tx-12"><b>* <?= $meiomc2; ?> Sabores:</b></span></p>
-										<p style="margin-left:10px;" align="left"><span class="tx-12">
-												<?php while ($meiomv2 = $meiom2->fetch(PDO::FETCH_OBJ)) { ?>
-													<?= $meiomv2->nome . "<br>"; ?>
-												<?php } ?>
-											</span></p>
+									<br>
+									<center><strong>DADOS DO CLIENTE</strong></center>
+									<hr />
+									<p style="margin-left:10px;" align="left"><span class="tx-12"><b>Nome: </b><?= $nome; ?></span></p>
+									<p style="margin-left:10px;" align="left"><span class="tx-12"><b>Celular: </b><?= $pedido->celular; ?></span></p>
+									<?php if ($pedido->mesa > 0) { ?>
+										<p style="margin-left:10px;" align="left"><span class="tx-12"><b>Mesa: </b><?= $pedido->mesa; ?></span></p>
+										<p style="margin-left:10px;" align="left"><span class="tx-12"><b>Pessoa na Mesa: </b><?= $pedido->pessoas; ?></span></p>
+										<p style="margin-left:10px;" align="left"><span class="tx-12"><b>Obs: </b><?= $pedido->obs; ?></span></p>
 									<?php } ?>
+									<br>
+									<p style="margin-left:10px;" align="right"><span class="tx-11"><b><?= date("d-m-Y H:i:s"); ?></b></span></p>
+									</div>
 
-									<?php
-									$adcionais2  = $connect->query("SELECT * FROM store_o WHERE idp = '" . $carpro2->idpedido . "' AND status = '1' AND idu='$cod_id' AND meioameio='0' AND id_referencia='$carpro2->referencia' ");
-									$adcionaisc2 = $adcionais2->rowCount();
-									// print $adcionaisc2;
-									?>
-
-									<?php if ($adcionaisc2 > 0) { ?>
-										<p style="margin-left:10px;" align="left"><span class="tx-12"><b>* Adicionais/Ingredientes:</b></p>
-										<p style="margin-left:10px;" align="left"><span class="tx-12">
-												<?php while ($adcionaisv2 = $adcionais2->fetch(PDO::FETCH_OBJ)) { ?>
-													<?= "- " . $adcionaisv2->nome . "<br>"; ?>
-												<?php } ?>
-											</span></p>
-									<?php } ?>
-									<center>=========================</center>
-									</p>
-								<?php } ?>
-
-								<?php
-								$nome = str_replace('%20', ' ', $pedido->nome);
-								?>
-								<br>
-								<center><strong>DADOS DO CLIENTE</strong></center>
-								<hr />
-								<p style="margin-left:10px;" align="left"><span class="tx-12"><b>Nome: </b><?= $nome; ?></span></p>
-								<p style="margin-left:10px;" align="left"><span class="tx-12"><b>Celular: </b><?= $pedido->celular; ?></span></p>
-								<?php if ($pedido->mesa > 0) { ?>
-									<p style="margin-left:10px;" align="left"><span class="tx-12"><b>Mesa: </b><?= $pedido->mesa; ?></span></p>
-									<p style="margin-left:10px;" align="left"><span class="tx-12"><b>Pessoa na Mesa: </b><?= $pedido->pessoas; ?></span></p>
-									<p style="margin-left:10px;" align="left"><span class="tx-12"><b>Obs: </b><?= $pedido->obs; ?></span></p>
-								<?php } ?>
-								<br>
-								<p style="margin-left:10px;" align="right"><span class="tx-11"><b><?= date("d-m-Y H:i:s"); ?></b></span></p>
 						</div>
+
+
 					</div>
 				</div>
-
-
-			</div>
-		</div>
-		<!-- <script src="../lib/jquery/js/jquery.js"></script>
+				<!-- <script src="../lib/jquery/js/jquery.js"></script>
 		<script src="../lib/bootstrap/js/bootstrap.js"></script>
 		<script src="../js/moeda.js"></script> -->
 
-		<script src="../lib/jquery/js/jquery.js"></script>
-		<script src="../lib/datatables/js/jquery.dataTables.js"></script>
-		<script src="../lib/datatables-responsive/js/dataTables.responsive.js"></script>
-		<script src="../lib/select2/js/select2.min.js"></script>
+				<script src="../lib/jquery/js/jquery.js"></script>
+				<script src="../lib/datatables/js/jquery.dataTables.js"></script>
+				<script src="../lib/datatables-responsive/js/dataTables.responsive.js"></script>
+				<script src="../lib/select2/js/select2.min.js"></script>
 
-		<!-- <script>
+				<!-- <script>
 			$('.dinheiro').mask('#.##0,00', {
 				reverse: true
 			});
 		</script> -->
 
 
-		<script language="javascript">
-			function PrintMe(DivID) {
-				var disp_setting = "toolbar=yes,location=no,";
-				disp_setting += "directories=yes,menubar=yes,";
-				disp_setting += "scrollbars=yes,width=450, height=600, left=100, top=25";
-				var content_vlue = document.getElementById(DivID).innerHTML;
-				var docprint = window.open("", "", disp_setting);
-				docprint.document.open();
-				docprint.document.write('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"');
-				docprint.document.write('"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">');
-				docprint.document.write('<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">');
-				docprint.document.write('<head><title>COMANDA BALCAO</title>');
-				docprint.document.write('<style type="text/css">body{ margin:0px;');
-				docprint.document.write('font-family:verdana,Arial;color:#000;');
-				docprint.document.write('font-family:Verdana, Geneva, sans-serif; font-size:12px;}');
-				docprint.document.write('a{color:#000;text-decoration:none;} </style>');
-				docprint.document.write('</head><body onLoad="self.print()">');
-				docprint.document.write(content_vlue);
-				docprint.document.write('</body></html>');
-				docprint.document.close();
-				docprint.focus();
-			}
-		</script>
+				<script language="javascript">
+					function PrintMe(DivID) {
+						var disp_setting = "toolbar=yes,location=no,";
+						disp_setting += "directories=yes,menubar=yes,";
+						disp_setting += "scrollbars=yes,width=450, height=600, left=100, top=25";
+						var content_vlue = document.getElementById(DivID).innerHTML;
+						var docprint = window.open("", "", disp_setting);
+						docprint.document.open();
+						docprint.document.write('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"');
+						docprint.document.write('"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">');
+						docprint.document.write('<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">');
+						docprint.document.write('<head><title>COMANDA BALCAO</title>');
+						docprint.document.write('<style type="text/css">body{ margin:0px;');
+						docprint.document.write('font-family:verdana,Arial;color:#000;');
+						docprint.document.write('font-family:Verdana, Geneva, sans-serif; font-size:12px;}');
+						docprint.document.write('a{color:#000;text-decoration:none;} </style>');
+						docprint.document.write('</head><body onLoad="self.print()">');
+						docprint.document.write(content_vlue);
+						docprint.document.write('</body></html>');
+						docprint.document.close();
+						docprint.focus();
+					}
+				</script>
 
-		<script language="javascript">
-			function PrintMe2(DivID) {
-				var disp_setting = "toolbar=yes,location=no,";
-				disp_setting += "directories=yes,menubar=yes,";
-				disp_setting += "scrollbars=yes,width=450, height=600, left=100, top=25";
-				var content_vlue = document.getElementById(DivID).innerHTML;
-				var docprint = window.open("", "", disp_setting);
-				docprint.document.open();
-				docprint.document.write('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"');
-				docprint.document.write('"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">');
-				docprint.document.write('<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">');
-				docprint.document.write('<head><title>COMANDA MESA</title>');
-				docprint.document.write('<style type="text/css">body{ margin:0px;');
-				docprint.document.write('font-family:verdana,Arial;color:#000;');
-				docprint.document.write('font-family:Verdana, Geneva, sans-serif; font-size:12px;}');
-				docprint.document.write('a{color:#000;text-decoration:none;} </style>');
-				docprint.document.write('</head><body onLoad="self.print()"><center>');
-				docprint.document.write(content_vlue);
-				docprint.document.write('</center></body></html>');
-				docprint.document.close();
-				docprint.focus();
-			}
-		</script>
-		<script type="text/javascript">
-			function enviarMensagem() {
-				var celular = document.querySelector("#celular").value;
-				celular = celular.replace(/\D/g, '');
-				if (celular.length < 13) {
-					celular = "55" + celular;
-				}
-				var texto = document.querySelector("#mensagem").value;
-				texto = window.encodeURIComponent(texto);
-				window.open("https://api.whatsapp.com/send?phone=" + celular + "&text=" + texto, "_blank");
-			}
-		</script>
-		<script type="text/javascript">
-			function enviarMensagem2() {
-				var celular = document.querySelector("#celular2").value;
-				celular = celular.replace(/\D/g, '');
-				if (celular.length < 13) {
-					celular = "55" + celular;
-				}
-				var texto = document.querySelector("#mensagem2").value;
-				texto = window.encodeURIComponent(texto);
-				window.open("https://api.whatsapp.com/send?phone=" + celular + "&text=" + texto, "_blank");
-			}
-		</script>
-		<script type="text/javascript">
-			function enviarMensagem3() {
-				var celular = document.querySelector("#celular3").value;
-				celular = celular.replace(/\D/g, '');
-				if (celular.length < 13) {
-					celular = "55" + celular;
-				}
-				var texto = document.querySelector("#mensagem3").value;
-				texto = window.encodeURIComponent(texto);
-				window.open("https://api.whatsapp.com/send?phone=" + celular + "&text=" + texto, "_blank");
-			}
-		</script>
-		<script type="text/javascript">
-			function enviarMensagem4() {
-				var celular = document.querySelector("#celular4").value;
-				celular = celular.replace(/\D/g, '');
-				if (celular.length < 13) {
-					celular = "55" + celular;
-				}
-				var texto = document.querySelector("#mensagem4").value;
-				texto = window.encodeURIComponent(texto);
-				window.open("https://api.whatsapp.com/send?phone=" + celular + "&text=" + texto, "_blank");
-			}
-		</script>
-		<script type="text/javascript">
-			function enviarMensagem5() {
-				var celular = document.querySelector("#celular5").value;
-				celular = celular.replace(/\D/g, '');
-				if (celular.length < 13) {
-					celular = "55" + celular;
-				}
-				var texto = document.querySelector("#mensagem5").value;
-				texto = window.encodeURIComponent(texto);
-				window.open("https://api.whatsapp.com/send?phone=" + celular + "&text=" + texto, "_blank");
-			}
-		</script>
+				<script language="javascript">
+					function PrintMe2(DivID) {
+						var disp_setting = "toolbar=yes,location=no,";
+						disp_setting += "directories=yes,menubar=yes,";
+						disp_setting += "scrollbars=yes,width=450, height=600, left=100, top=25";
+						var content_vlue = document.getElementById(DivID).innerHTML;
+						var docprint = window.open("", "", disp_setting);
+						docprint.document.open();
+						docprint.document.write('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"');
+						docprint.document.write('"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">');
+						docprint.document.write('<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">');
+						docprint.document.write('<head><title>COMANDA MESA</title>');
+						docprint.document.write('<style type="text/css">body{ margin:0px;');
+						docprint.document.write('font-family:verdana,Arial;color:#000;');
+						docprint.document.write('font-family:Verdana, Geneva, sans-serif; font-size:12px;}');
+						docprint.document.write('a{color:#000;text-decoration:none;} </style>');
+						docprint.document.write('</head><body onLoad="self.print()"><center>');
+						docprint.document.write(content_vlue);
+						docprint.document.write('</center></body></html>');
+						docprint.document.close();
+						docprint.focus();
+					}
+				</script>
+				<script type="text/javascript">
+					function enviarMensagem() {
+						var celular = document.querySelector("#celular").value;
+						celular = celular.replace(/\D/g, '');
+						if (celular.length < 13) {
+							celular = "55" + celular;
+						}
+						var texto = document.querySelector("#mensagem").value;
+						texto = window.encodeURIComponent(texto);
+						window.open("https://api.whatsapp.com/send?phone=" + celular + "&text=" + texto, "_blank");
+					}
+				</script>
+				<script type="text/javascript">
+					function enviarMensagem2() {
+						var celular = document.querySelector("#celular2").value;
+						celular = celular.replace(/\D/g, '');
+						if (celular.length < 13) {
+							celular = "55" + celular;
+						}
+						var texto = document.querySelector("#mensagem2").value;
+						texto = window.encodeURIComponent(texto);
+						window.open("https://api.whatsapp.com/send?phone=" + celular + "&text=" + texto, "_blank");
+					}
+				</script>
+				<script type="text/javascript">
+					function enviarMensagem3() {
+						var celular = document.querySelector("#celular3").value;
+						celular = celular.replace(/\D/g, '');
+						if (celular.length < 13) {
+							celular = "55" + celular;
+						}
+						var texto = document.querySelector("#mensagem3").value;
+						texto = window.encodeURIComponent(texto);
+						window.open("https://api.whatsapp.com/send?phone=" + celular + "&text=" + texto, "_blank");
+					}
+				</script>
+				<script type="text/javascript">
+					function enviarMensagem4() {
+						var celular = document.querySelector("#celular4").value;
+						celular = celular.replace(/\D/g, '');
+						if (celular.length < 13) {
+							celular = "55" + celular;
+						}
+						var texto = document.querySelector("#mensagem4").value;
+						texto = window.encodeURIComponent(texto);
+						window.open("https://api.whatsapp.com/send?phone=" + celular + "&text=" + texto, "_blank");
+					}
+				</script>
+				<script type="text/javascript">
+					function enviarMensagem5() {
+						var celular = document.querySelector("#celular5").value;
+						celular = celular.replace(/\D/g, '');
+						if (celular.length < 13) {
+							celular = "55" + celular;
+						}
+						var texto = document.querySelector("#mensagem5").value;
+						texto = window.encodeURIComponent(texto);
+						window.open("https://api.whatsapp.com/send?phone=" + celular + "&text=" + texto, "_blank");
+					}
+				</script>
 </body>
 
 </html>

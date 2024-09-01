@@ -50,6 +50,7 @@ if ($produtoscx > 0) {
 // var_dump($produtoscx);
 
 //
+// echo $_SESSION['nomeprt'];
 
 if (isset($_POST["pedidomesa"])) {
 	$nome 			= $_POST['nome'];
@@ -63,6 +64,7 @@ if (isset($_POST["pedidomesa"])) {
 
 	$editarcor 		= $connect->query("UPDATE pedidos SET nome='$nome', celular='$wps', pessoas='$pessoas', fpagamento='MESA', mesa='$mesa', obs='$observacoes', vsubtotal='$subtotal', vadcionais='$adcionais', vtotal='$totalg' WHERE idpedido='$id_cliente'");
 
+	
 	if (isset($_SESSION['nomeprt']) || !empty($_SESSION['nomeprt'])) {
 		//criar um script para página /home
 		// $_SESSION['ativar_script_audio'] = " <script>
@@ -93,6 +95,7 @@ if (isset($_POST["pedidomesa"])) {
 		}
 		// Reseta a Integridade
 	}
+	
 
 	$id_produto_status = isset($_SESSION['nomeprt']) ? "1" : "2";
 

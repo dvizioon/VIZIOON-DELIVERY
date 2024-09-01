@@ -1,0 +1,112 @@
+
+
+
+
+/* Estilo dos checkboxes */
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    position:absolute;
+    right:5%;
+    bottom:0;
+    margin:0 0 -1rem 0;
+
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+
+    --w:40px;
+    width: var(--w);
+    height: var(--w);
+    margin-right: 10px;
+    accent-color: #00CC00;
+    /* Cor personalizada para o checkbox */
+}
+
+
+.item-list .item {
+    margin-bottom: 5px;
+}
+
+.item-list .item b {
+    color: #FF0000;
+}
+
+
+.container-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Espaçamento entre os cartões */
+    justify-content: space-between; /* Espaçamento uniforme entre as colunas */
+}
+
+.card {
+    width: calc(50% - 10px); /* Cada cartão ocupará metade da largura do contêiner, subtraindo o espaço do gap */
+    box-sizing: border-box; /* Garante que o padding e o border sejam incluídos na largura total */
+    position: relative;
+}
+
+
+.card-container {
+    background-color: white;
+    width: 100%;
+   padding:1rem;
+    border: 2px solid black;
+    position: relative;
+
+}
+
+.container-card-info{
+    display: flex;
+    gap:1rem;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Espaçamento uniforme entre as colunas */
+
+}
+
+.container-card-info-content {
+    width: calc(50% - 10px);
+    /* Cada cartão ocupará metade da largura do contêiner, subtraindo o espaço do gap */
+    box-sizing: border-box;
+    /* Garante que o padding e o border sejam incluídos na largura total */
+    position: relative;
+}
+
+/* Firefox (uncomment to work in Firefox, although other properties will not work!)  */
+/** {
+  scrollbar-width: thin;
+  scrollbar-color: #397524 #DFE9EB;
+}*/
+
+/* Chrome, Edge and Safari */
+.card-container::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+}
+
+.card-container::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: #dfe9eb00;
+}
+
+.card-container::-webkit-scrollbar-track:hover {
+    background-color: #b8c0c200;
+}
+
+.card-container::-webkit-scrollbar-track:active {
+    background-color: #ff000000;
+}
+
+.card-container::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #ff9100;
+}
+
+.card-container::-webkit-scrollbar-thumb:hover {
+        background-color: #ff9100;
+}
+
+.card-container::-webkit-scrollbar-thumb:active {
+        background-color: #ff9100;
+}

@@ -73,10 +73,10 @@ function renderTable($pedidos)
             $status_verificar = "Cancelado";
             $status = "<button class=\"btn btn-danger w-100 h-100 btn-sm\">Cancelado</button>";
         } elseif ($pedidossx->status == 7) {
-            $status_verificar = "Confirmado Cozinha";
-            $status = "<button class=\"btn btn-purple btn-sm\">Confirmado Cozinha</button>";
+            $status_verificar = "Entregue Cozinha";
+            $status = "<button class=\"btn btn-purple btn-sm\">Entregue Cozinha</button>";
         } elseif ($pedidossx->status == 9) {
-            $status_verificar = "Confirmado Cozinha";
+            $status_verificar = "Pagamento Incompleto";
             $status = "<button class=\"btn btn-warning btn-sm\">Pagamento Incompleto</button>";
         }
 

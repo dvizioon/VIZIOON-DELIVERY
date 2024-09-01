@@ -39,10 +39,53 @@ if (isset($_POST["pedidobalcao"])) {
 	$adcionais  	= $_POST['adcionais'];
 	$totalg  		= $_POST['totalg'];
 	$editarcor 		= $connect->query("UPDATE pedidos SET nome='$nome', celular='$wps', fpagamento='BALCAO', vsubtotal='$subtotal', vadcionais='$adcionais', vtotal='$totalg' WHERE idpedido='$id_cliente'");
+
+	if (isset($_SESSION['nomeprt']) || !empty($_SESSION['nomeprt'])) {
+		//criar um script para página /home
+		// $_SESSION['ativar_script_audio'] = " <script>
+		// var audio = new Audio('./sounds/campainha.mp3');
+		// audio.addEventListener('canplaythrough', function() {
+		// 	audio.play();
+		// 	});
+		// 	</script>";
+
+		if (empty($efeito_padrao)) {
+			$_SESSION['ativar_script_audio'] = "
+            <script>
+                var audio = new Audio('./sounds/campainha.mp3');
+                audio.addEventListener('canplaythrough', function() {
+                    audio.play();
+                });
+            </script>
+            ";
+		} else {
+			$_SESSION['ativar_script_audio'] = "
+            <script>
+                var audio = new Audio('./sounds/" . htmlspecialchars(basename($efeito_padrao->caminho)) . "');
+                audio.addEventListener('canplaythrough', function() {
+                    audio.play();
+                });
+            </script>
+            ";
+		}
+		// Reseta a Integridade
+	}
+
+
+	$id_produto_status = isset($_SESSION['nomeprt']) ? "1" : "2";
+
+	$editarcor = $connect->query("UPDATE pedidos SET status = '$id_produto_status' WHERE idpedido='$id_cliente'");
+
 	if ($editarcor) {
+		unset($_SESSION['nomeprt']);
 		header("location: pdv.php");
 		exit;
 	}
+	
+	// if ($editarcor) {
+	// 	header("location: pdv.php");
+	// 	exit;
+	// }
 }
 
 $taxa = "0,00";

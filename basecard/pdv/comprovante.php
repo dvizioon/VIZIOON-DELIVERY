@@ -213,7 +213,7 @@ include_once('../../funcoes/Key.php');
                                             <?php } ?>
 
                                             <?php
-                                            $meiom  = $connect->query("SELECT * FROM store_o WHERE idp = '" . $carpro->idpedido . "' AND status = '1' AND idu='$cod_id' AND meioameio='1' id_referencia='" . $carpro->referencia . "' ");
+                                            $meiom  = $connect->query("SELECT * FROM store_o WHERE idp = '" . $carpro->idpedido . "' AND status = '1' AND idu='$cod_id' AND meioameio='1' AND id_referencia='" . $carpro->referencia . "' ");
                                             $meiomc = $meiom->rowCount();
                                             ?>
 
@@ -281,7 +281,7 @@ include_once('../../funcoes/Key.php');
                                             print $delivery = "<p style=\"margin-left:10px;\" align=\"left\"><span class=\"tx-12\"><b>No Balcão</b></span></p>";
                                         }
                                         ?>
-                                        <p style="margin-left:10px;" align="left"><span class="tx-12"><b>Subtotal: R$: </b><?= formatMoedaBr(formatCurrency($pedido->vsubtotal)) ?></span></p>
+                                        <p style="margin-left:10px;" align="left"><span class="tx-12"><b>Subtotal: R$: </b><?= number_format($pedido->vsubtotal, 2, ',', '.') ?></span></p>
                                         <?php if ($pedido->vadcionais > 0.00) { ?>
                                             <p style="margin-left:10px;" align="left"><span class="tx-12"><b>Adicionais: R$: </b><?= formatMoedaBr(formatCurrency($pedido->vadcionais)) ?></span></p>
                                         <?php } ?>
@@ -289,7 +289,7 @@ include_once('../../funcoes/Key.php');
                                             <p style="margin-left:10px;" align="left"><span class="tx-12"><b>Taxa de Entrega: R$: </b><?= formatMoedaBr(formatCurrency($pedido->taxa)) ?></span></p>
                                             <p style="margin-left:10px;" align="left"><span class="tx-12"><b>Total Geral: </b> R$: <?= formatMoedaBr(formatCurrency(($pedido->vtotal))) ?></span></p>
                                         <?php } else { ?>
-                                            <p style="margin-left:10px;" align="left"><span class="tx-12"><b>Total Geral: </b> R$: <?= formatMoedaBr(formatCurrency($pedido->vtotal)) ?></span></p>
+                                            <p style="margin-left:10px;" align="left"><span class="tx-12"><b>Total Geral: </b> R$: <?= number_format($pedido->vtotal, 2, ',', '.') ?></span></p>
                                         <?php } ?>
                                         <?php if ($pedido->troco > 0) { ?>
                                             <p style="margin-left:10px;" align="left"><span class="tx-12"><b>Troco para: R$: </b><?= formatMoedaBr(formatCurrency($pedido->troco)) ?></span></p>
