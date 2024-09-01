@@ -154,6 +154,10 @@ if (isset($_POST['entregar_itens'])) {
 		$stmt_update_store_o = $connect->prepare("UPDATE store_o SET pedido_entregue='sim' WHERE id IN (" . implode(',', array_map('intval', $itens)) . ") AND idp=:idpedido");
 		$stmt_update_store_o->bindParam(':idpedido', $idpedido, PDO::PARAM_STR);
 		$stmt_update_store_o->execute();
+
+		$stmt_update_cozinha = $connect->prepare("UPDATE cozinha SET status_cozinha='entregue' WHERE idpedido=:idpedido");
+		$stmt_update_cozinha->bindParam(':idpedido', $idpedido, PDO::PARAM_STR);
+		$stmt_update_cozinha->execute();
 	}
 
 	// Redirecionar após a atualização
@@ -189,7 +193,6 @@ if (isset($_POST['entregar_tudo'])) {
 }
 
 
-
 // Verifique se a mensagem já foi exibida na sessão
 if (!isset($_SESSION['message_shown'])) {
 	// Atualizar a tabela cozinha para refletir que o pedido foi entregue
@@ -198,9 +201,9 @@ if (!isset($_SESSION['message_shown'])) {
 	$stmt_update_cozinha->execute();
 
 	// Atualizar o status do pedido para "entregue" (comentado aqui, mas pode ser ativado conforme necessário)
-	// $stmt_update_pedido = $connect->prepare("UPDATE pedidos SET status='7' WHERE idpedido=:idpedido");
-	// $stmt_update_pedido->bindParam(':idpedido', $idpedido, PDO::PARAM_INT);
-	// $stmt_update_pedido->execute();
+	$stmt_update_pedido = $connect->prepare("UPDATE pedidos SET status='7' WHERE idpedido=:idpedido");
+	$stmt_update_pedido->bindParam(':idpedido', $idpedido, PDO::PARAM_INT);
+	$stmt_update_pedido->execute();
 
 	// Marcar que a mensagem foi exibida
 	$_SESSION['message_shown'] = true;
@@ -224,6 +227,9 @@ if (!isset($_SESSION['message_shown'])) {
 	header("Location: tela.php");
 	exit();
 }
+
+
+
 ?>
 
 
@@ -326,58 +332,47 @@ if (!isset($_SESSION['message_shown'])) {
 								if ($total_itens == $itens_entregues) {
 									// Todos os itens foram entregues
 
-									// Atualizar a tabela cozinha para refletir que o pedido foi entregue
-									// $stmt_update_cozinha = $connect->prepare("UPDATE cozinha SET status_cozinha='entregue' WHERE idpedido=:idpedido");
-									// $stmt_update_cozinha->bindParam(':idpedido', $idpedido, PDO::PARAM_STR);
-									// $stmt_update_cozinha->execute();
-
-									//  Atualizar o status do pedido para "entregue"
-									// $stmt_update_pedido = $connect->prepare("UPDATE pedidos SET status='7' WHERE idpedido=:idpedido");
-									// $stmt_update_pedido->bindParam(':idpedido', $idpedido, PDO::PARAM_INT);
-									// $stmt_update_pedido->execute();
-
-
-									// Atualizar a tabela cozinha para refletir que o pedido foi entregue
-									$stmt_update_cozinha = $connect->prepare("UPDATE cozinha SET status_cozinha='entregue' WHERE idpedido=:idpedido");
-									$stmt_update_cozinha->bindParam(':idpedido', $idpedido, PDO::PARAM_STR);
-									$stmt_update_cozinha->execute();
-
-									// Atualizar o status do pedido para "entregue"
-									$stmt_update_pedido = $connect->prepare("UPDATE pedidos SET status='7' WHERE idpedido=:idpedido");
-									$stmt_update_pedido->bindParam(':idpedido', $idpedido, PDO::PARAM_INT);
-									$stmt_update_pedido->execute();
-
-									// Definir a mensagem para exibição
-									$_SESSION['message'] =
-										'<div class="col-lg-12 mg-b-20">
-											<div class="card card-info form-container">
-												<div class="card-body">
-													<div class="row">
-														<div class="col-md-12 text-center">
-															<span class="tx-18" style="color:#00CC00"><b>PEDIDO ' . htmlspecialchars($idpedido) . '</b></span><br>
-															<span class="tx-13">Todos os itens foram entregues.</span>
+									// Verificar se a mensagem já foi exibida na sessão
+									if (!isset($_SESSION['message_shown'])) {
+										// Definir a mensagem para exibição
+										$_SESSION['message'] =
+											'<div class="col-lg-12 mg-b-20">
+												<div class="card card-info form-container">
+													<div class="card-body">
+														<div class="row">
+															<div class="col-md-12 text-center">
+																<span class="tx-18" style="color:#00CC00"><b>PEDIDO ' . htmlspecialchars($idpedido) . '</b></span><br>
+																<span class="tx-13">Todos os itens foram entregues.</span>
+															</div>
 														</div>
 													</div>
 												</div>
-											</div>
-										</div>';
+											</div>';
 
-									$_SESSION['message_shown'] = true;
+										// Atualizar a tabela cozinha para refletir que o pedido foi entregue
+										// $stmt_update_cozinha = $connect->prepare("UPDATE cozinha SET status_cozinha='entregue' WHERE idpedido=:idpedido");
+										// $stmt_update_cozinha->bindParam(':idpedido', $idpedido, PDO::PARAM_STR);
+										// $stmt_update_cozinha->execute();
 
-									// Redirecionar após definir a mensagem
-									header("Location: tela.php");
-									exit();
+										// // Atualizar o status do pedido para "entregue"
+										// $stmt_update_pedido = $connect->prepare("UPDATE pedidos SET status='7' WHERE idpedido=:idpedido");
+										// $stmt_update_pedido->bindParam(':idpedido', $idpedido, PDO::PARAM_INT);
+										// $stmt_update_pedido->execute();
 
-									if (isset($_SESSION['message'])) {
-										echo $_SESSION['message'];
-										unset($_SESSION['message']); // Remover a mensagem após exibi-la
+										// Marcar que a mensagem foi exibida
+										$_SESSION['message_shown'] = true;
+
+										// Redirecionar após definir a mensagem
+										header("Location: tela.php");
+										exit();
 									}
 
-
-
-									
-
-					
+									// Exibir a mensagem se estiver definida
+									if (isset($_SESSION['message'])) {
+										echo $_SESSION['message'];
+										// unset($_SESSION['message_shown']); // Remover a mensagem após exibi-la
+										unset($_SESSION['message']); // Remover a mensagem após exibi-la
+									}
 								} else {
 									// Mostrar itens que ainda não foram entregues
 						?>

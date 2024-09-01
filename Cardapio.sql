@@ -47,7 +47,7 @@ CREATE TABLE `adm` (
 --
 
 INSERT INTO `adm` (`Id`, `dias`, `novocliente`, `nome`, `login`, `senha`, `linkpgmto`, `statuslink`, `bloquear`, `celular`, `nomedosite`, `urlsite`) VALUES
-(1, '7', '1', 'admin', 'super_admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '<script src=\"https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js\"\r\ndata-preference-id=\"666738441-c1885f4d-d035-4ece-bef6-3ec12c1297cb\">\r\n</script>\r\n\r\n', 1, 1, '6782085883', 'CardaZAP®', 'https://cardazap.com.br/');
+(1, '7', '1', 'admin', 'super_admin', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '<script src=\"https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js\"\r\ndata-preference-id=\"666738441-c1885f4d-d035-4ece-bef6-3ec12c1297cb\">\r\n</script>\r\n\r\n', 1, 1, '98970149903', 'Vizioon Delivery', 'https://cardazap.com.br/');
 
 -- --------------------------------------------------------
 

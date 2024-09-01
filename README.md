@@ -1,67 +1,144 @@
-# Cardápio Digital
+# 📱 Vizioon Delivery
 
+<p align="center">
+  <img src="./screenshots/logo.png" alt="Imagem de capa do projeto" width="600">
+</p>
 
-<img src="./screenshots/01.png" alt="" />
+<p align="center">
+  <a href="https://github.com/dvizioon/VIZIOON-DELIVERY/issues">
+    <img src="https://img.shields.io/github/issues/dvizioon/VIZIOON-DELIVERY?style=for-the-badge" alt="Issues">
+  </a>
+  <a href="https://github.com/dvizioon/VIZIOON-DELIVERY/fork">
+    <img src="https://img.shields.io/github/forks/dvizioon/VIZIOON-DELIVERY?style=for-the-badge" alt="Forks">
+  </a>
+  <a href="https://github.com/dvizioon/VIZIOON-DELIVERY/stargazers">
+    <img src="https://img.shields.io/github/stars/dvizioon/VIZIOON-DELIVERY?style=for-the-badge" alt="Stars">
+  </a>
+  <a href="https://github.com/dvizioon/VIZIOON-DELIVERY/license">
+    <img src="https://img.shields.io/github/license/dvizioon/VIZIOON-DELIVERY?style=for-the-badge" alt="License">
+  </a>
+</p>
 
-Este projeto é um sistema de cardápio digital integrado com o WhatsApp, projetado para facilitar o processo de pedidos para clientes e aumentar as vendas dos estabelecimentos. 
+## 📋 Índice
 
-![PHP](https://img.shields.io/badge/php-%23777BB4.svg?&style=for-the-badge&logo=php&logoColor=white)
-![HTML](https://img.shields.io/badge/html-%23E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white)
-![CSS](https://img.shields.io/badge/css-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/javascript-%23F7DF1E.svg?&style=for-the-badge&logo=javascript&logoColor=black)
+- [Sobre o Projeto](#sobre-o-projeto)
+- [Funcionalidades](#funcionalidades)
+- [Demonstração](#demonstração)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Pré-requisitos](#pré-requisitos)
+- [Instalação](#instalação)
+---
 
+## 📖 Sobre o Projeto
 
-## Visão Geral
+O **Cardápio Digital Integrado com WhatsApp** é uma solução completa e eficiente para estabelecimentos do ramo alimentício que desejam modernizar e agilizar o processo de pedidos. Com uma interface intuitiva e amigável, permite que os clientes realizem pedidos diretamente pelo WhatsApp, proporcionando praticidade e aumentando o potencial de vendas.
 
-O cardápio digital permite que os clientes façam pedidos diretamente pelo WhatsApp, fornecendo uma interface amigável e funcional para gerenciamento de produtos e pedidos.
+Este projeto visa reduzir a complexidade na gestão de pedidos, eliminando a necessidade de aplicativos intermediários e taxas adicionais. É uma ferramenta ideal para restaurantes, lanchonetes, cafeterias e outros estabelecimentos que buscam uma presença digital forte e eficaz.
 
-## Funcionalidades
+---
 
-- **Cadastro de Estabelecimento**: Crie e personalize seu cardápio digital.
-- **Compartilhamento**: Compartilhe seu QR Code ou link nas redes sociais.
-- **Recebimento de Pedidos**: Receba pedidos diretamente no WhatsApp e no painel de vendas.
-- **Gerenciamento de Produtos**: Edite preços e produtos em tempo real.
-- **Relatórios de Vendas**: Gere relatórios de vendas por datas.
-- **Interface Amigável**: Interface fácil e intuitiva para os clientes.
+## 🚀 Funcionalidades Principais
 
-## Tecnologias Utilizadas
+- **Integração com WhatsApp**: Receba pedidos diretamente no WhatsApp, permitindo que o cliente finalize a compra através de uma conversa.
+- **Gerenciamento de Produtos em Tempo Real**: Adicione, remova ou edite produtos e preços diretamente no painel administrativo.
+- **Relatórios Detalhados**: Acompanhe o histórico de vendas e gere relatórios customizados com filtros de datas.
+- **Pedidos em Tempo Real**: Atualização instantânea dos pedidos no painel de controle, facilitando o acompanhamento dos pedidos abertos.
+- **Compartilhamento de Link e QR Code**: Facilite o acesso ao cardápio digital com links ou QR Codes.
+- **Suporte a Vários Dispositivos**: Interface responsiva para garantir que o cardápio seja acessível tanto em smartphones quanto em tablets e desktops.
+- **Atualizações Automáticas**: Produtos e promoções são automaticamente atualizados para todos os usuários ao acessar o cardápio.
 
-- PHP
-- HTML
-- CSS
-- JavaScript
-- Font Awesome
-- Bootstrap
+---
 
-## Estrutura de Arquivos
+## 🔄 Atualizações Futuras
+Estamos sempre buscando melhorar o sistema. Aqui estão algumas das funcionalidades planejadas para as próximas versões:
 
-- `index.php`: Página principal do cardápio digital.
-- `funcoes/Conexao.php`: Script para conexão com o banco de dados.
-- `funcoes/Key.php`: Script para manipulação de chaves de acesso.
-- `css/meupedido.css`: Arquivo CSS para estilização da página.
-- `js/navbar-ontop.js`: Script JavaScript para funcionalidade da navbar.
-- `js/animate-in.js`: Script JavaScript para animações.
+-  **Pagamentos Online**: Integração com gateways de pagamento para que o cliente possa pagar diretamente pelo cardápio digital.
+-  **Sistema de Avaliações**: Permitir que os clientes avaliem produtos e serviços diretamente no cardápio.
+- **Notificações por Email**: Envio de notificações para os estabelecimentos quando novos pedidos forem feitos.
+- **Múltiplos Idiomas**: Suporte multilíngue para atender a diferentes regiões e públicos.
 
-## Como Usar
+---
 
-1. **Clone o Repositório**
+## 🛡️ Segurança
+O projeto possui mecanismos de segurança para proteger os dados de pedidos e clientes:
 
-```sh
-   git clone https://github.com/seu-usuario/seu-repositorio.git
-   cd seu-repositorio
+- **Validação de Inputs**: Validação dos dados inseridos pelos usuários antes de enviar para  o banco de dados.
+- **Escapando SQL**: Uso de prepared statements para evitar ataques de injeção SQL.
+- **Chaves de Segurança**: Sistema de chaves privadas para proteger áreas administrativas.
+
+## 🎥 Demonstração
+
+<p align="center">
+  <img src="./screenshots/video.gif" alt="Demonstração do fluxo de pedido" width="600">
+</p>
+
+**Link da Demo ao Vivo**: [https://seu-dominio.com/demo](https://seu-dominio.com/demo)
+
+---
+
+## 🛠 Tecnologias Utilizadas
+
+<div align="center">
+
+![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
+![jQuery](https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white)
+![Font Awesome](https://img.shields.io/badge/Font%20Awesome-339AF0?style=for-the-badge&logo=font-awesome&logoColor=white)
+
+</div>
+
+---
+
+## 📄 Pré-requisitos
+
+Antes de começar, certifique-se de ter os seguintes itens instalados em sua máquina:
+
+- **PHP** >= 7.4
+- **MySQL** >= 5.7
+- **Composer**
+- **Servidor Web** (Apache, Nginx, etc.)
+- **Git**
+
+---
+
+## 💻 Instalação
+
+Siga os passos abaixo para configurar o projeto localmente:
+
+1. **Clone o repositório**
+
+```bash
+   git clone https://github.com/dvizioon/VIZIOON-DELIVERY
+   Acesse o diretório do projeto  
 ```
 
-## Configuração do Banco de Dados
+```bash
 
-> [!IMPORTANT]
-> `Configure seu banco de dados e insira as informações de conexão no arquivo funcoes/Conexao.php.`
+🔧 Configuração
+Configuração do Banco de Dados
 
-## Inicie o Servidor
-> `Inicie seu servidor web e acesse index.php no navegador.`
+Crie um banco de dados MySQL para o projeto.
 
-<img src="./screenshots/02.png" alt="" />
-<img src="./screenshots/03.png" alt="" />
-<img src="./screenshots/04.png" alt="" />
+# funcoes/conexao.php
 
-## Licença
-Distribuído sob a licença MIT. Veja LICENSE para mais informações.
+DB_HOST=localhost
+DB_PORT=3306
+DB_DATABASE=nome_do_seu_banco
+DB_USERNAME=seu_usuario
+DB_PASSWORD=sua_senha
+
+```
+
+## 🖼️ Imagens
+<p align="center">
+  <img src="./screenshots/master.png" alt="Demonstração do fluxo de pedido" width="600">
+  <img src="./screenshots/pdv.png" alt="Demonstração do fluxo de pedido" width="600">
+  <img src="./screenshots/master01.png" alt="Demonstração do fluxo de pedido" width="600">
+   <img src="./screenshots/pdv01.png" alt="Demonstração do fluxo de pedido" width="600">
+    <img src="./screenshots/pdv02.png" alt="Demonstração do fluxo de pedido" width="600">
+     <img src="./screenshots/cozinha01.png" alt="Demonstração do fluxo de pedido" width="600">
+</p>

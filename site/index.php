@@ -25,8 +25,8 @@ $nomeX		 		= $dadosgerais->nome;
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-md fixed-top bg-light navbar-light" style="background-color:#CCCCCC">
-    <div class="container"> <a class="navbar-brand" href="#"><img class="img-fluid d-block" src="img/logo.png" width="300" style=""></a> <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+  <nav class="navbar navbar-expand-md fixed-top z-index-10 bg-light navbar-light" style="background-color:#CCCCCC">
+    <div class="container"> <a class="navbar-brand" href="#"><img class="img-fluid d-block" src="img/logo.png" width="150" ></a> <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
       <div class="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
         <ul class="navbar-nav">
           <li class="nav-item mx-2"> <a class="nav-link" href="#inicio">Início</a> </li>
@@ -50,7 +50,7 @@ $nomeX		 		= $dadosgerais->nome;
             <i class="fa fa-check-circle text-primary" aria-hidden="true"></i> Gere relatórios de vendas por datas<br>
           </p>
 		  <br>
-          <a class="btn btn-lg btn-primary" href="https://olhardigital.xyz/delivery2.5.6/clientedemo/" target="blank"><b>Ver demostração</b></a>
+          <a class="btn btn-lg btn-primary" href="" target="blank"><b>Ver demostração</b></a>
         </div>
         <div class="col-md-6" style=""> <img class="d-block mx-auto img-fluid" src="img/phone.png" width="500"> </div>
       </div>
