@@ -72,7 +72,7 @@ O projeto possui mecanismos de segurança para proteger os dados de pedidos e cl
   <img src="./screenshots/video.gif" alt="Demonstração do fluxo de pedido" width="600">
 </p>
 
-**Link da Demo ao Vivo**: [https://seu-dominio.com/demo](https://seu-dominio.com/demo)
+**Link da Demo ao Vivo**: [http://www.dvizioon.com.br/sistema-delivery/demo](http://www.dvizioon.com.br/sistema-delivery/demo)
 
 ---
 
