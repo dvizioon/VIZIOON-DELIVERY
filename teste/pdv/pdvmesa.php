@@ -10,8 +10,13 @@ include_once('../../funcoes/Conexao.php');
 include_once('../../funcoes/Key.php');
 
 //$_GET['idpedido'] = preg_replace("/[^0-9]/", "", $_GET['idpedido']);
-$_SESSION["id_cliente"] = $_GET['idpedido'];
+$_SESSION["pedido_id_pdv"] = $_GET['idpedido'];
 
+$id_cliente     = $_SESSION["pedido_id_pdv"];
+$idPedido = $_GET['idpedido'];
+
+
+// echo $_SESSION["pedido_id_pdv"];
 // Mesas
 $mesas_informacoes_disponiveis_mesas = $connect->query("SELECT * FROM mesas WHERE idu='" . $idu . "' ORDER BY id DESC");
 $mesas_disponiveis = $mesas_informacoes_disponiveis_mesas->fetch(PDO::FETCH_OBJ);
@@ -21,8 +26,6 @@ $pedidos_informacoes_disponiveis = $connect->query("SELECT * FROM pedidos WHERE 
 $pedidos_disponiveis = $pedidos_informacoes_disponiveis->fetchAll(PDO::FETCH_OBJ);
 
 
-
-$id_cliente     = $_SESSION['id_cliente'];
 $tipo_pedido     = $_GET['tipo'];
 
 $empresa 		= $connect->query("SELECT * FROM config WHERE id='$idu'");
@@ -83,6 +86,7 @@ if (isset($_POST["pedidomesa"])) {
 	$stmt_pedido->execute();
 
 	if ($update) {
+		unset($_SESSION['pedido_id_pdv']);
 		header("location: pdv.php");
 		exit;
 	}

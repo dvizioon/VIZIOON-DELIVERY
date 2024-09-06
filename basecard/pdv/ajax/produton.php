@@ -49,7 +49,7 @@ if(isset($_POST["user_id"])){
 
 }
 $idPedido = isset($_POST["id_pedido"]) ? $_POST["id_pedido"] : 'Pedido não definido';
-
+// echo $idPedido ;
 $cont = 0;
 
 ?>

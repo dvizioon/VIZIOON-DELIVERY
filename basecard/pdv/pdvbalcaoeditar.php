@@ -10,9 +10,9 @@ include_once('../../funcoes/Conexao.php');
 include_once('../../funcoes/Key.php');
 
 $_GET['idpedido'] = preg_replace("/[^0-9]/", "", $_GET['idpedido']);
-$_SESSION["id_cliente"] = $_GET['idpedido'];
+$_SESSION["pedido_id_pdv"] = $_GET['idpedido'];
 
-$id_cliente     = $_SESSION['id_cliente'];
+$id_cliente     = $_SESSION["pedido_id_pdv"];
 $tipo_pedido     = $_GET['tipo'];
 
 $empresa 		= $connect->query("SELECT * FROM config WHERE id='$idu'");
@@ -77,6 +77,7 @@ if (isset($_POST["pedidobalcao"])) {
 	$editarcor = $connect->query("UPDATE pedidos SET status = '$id_produto_status' WHERE idpedido='$id_cliente'");
 
 	if ($editarcor) {
+		unset($_SESSION['pedido_id_pdv']);
 		unset($_SESSION['nomeprt']);
 		header("location: pdv.php");
 		exit;

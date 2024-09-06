@@ -10,8 +10,10 @@ include_once('../../funcoes/Conexao.php');
 include_once('../../funcoes/Key.php');
 
 $_GET['idpedido'] = preg_replace("/[^0-9]/", "", $_GET['idpedido']);
-$_SESSION["id_cliente"] = $_GET['idpedido'];
+$_SESSION["pedido_id_pdv"] = $_GET['idpedido'];
 
+$id_cliente     = $_SESSION["pedido_id_pdv"];
+$idPedido = $_GET['idpedido'];
 
 
 $stmt = $connect->prepare("SELECT * FROM efeitosSonoros WHERE idu = ? AND padrao = 'h'");
@@ -29,7 +31,6 @@ $mesas_disponiveis = $mesas_informacoes_disponiveis_mesas->fetch(PDO::FETCH_OBJ)
 $pedidos_informacoes_disponiveis = $connect->query("SELECT * FROM pedidos WHERE idu='" . $idu . "' ORDER BY id DESC");
 $pedidos_disponiveis = $pedidos_informacoes_disponiveis->fetchAll(PDO::FETCH_OBJ);
 
-$id_cliente     = $_SESSION['id_cliente'];
 $tipo_pedido     = $_GET['tipo'];
 
 $empresa 		= $connect->query("SELECT * FROM config WHERE id='$idu'");
@@ -103,6 +104,7 @@ if (isset($_POST["pedidomesa"])) {
 
 	if ($editarcor) {
 		unset($_SESSION['nomeprt']);
+		unset($_SESSION['pedido_id_pdv']);
 		header("location: pdv.php");
 		exit;
 	}

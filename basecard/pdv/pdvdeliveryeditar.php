@@ -10,9 +10,10 @@ include_once('../../funcoes/Conexao.php');
 include_once('../../funcoes/Key.php');
 
 //$_GET['idpedido'] = preg_replace("/[^0-9]/", "", $_GET['idpedido']);
-$_SESSION["id_cliente"] = $_GET['idpedido'];
 
-$id_cliente     = $_SESSION['id_cliente'];
+$_SESSION["pedido_id_pdv"] = $_GET['idpedido'];
+$id_cliente     = $_SESSION["pedido_id_pdv"];
+$idPedido = $_GET['idpedido'];
 $tipo_pedido     = $_GET['tipo'];
 
 
@@ -75,6 +76,7 @@ if (isset($_POST["pedidodelivery"])) {
 	$hora			= date("H:i:s");
 	$editarcor 		= $connect->query("UPDATE pedidos SET fpagamento='$fmpgto_json ', cidade='$cidade', numero='$numero', complemento='complemento', rua='$rua', bairro='$bairro', troco='$troco', nome='$nome', celular='$wps', taxa='$taxa', vsubtotal='$subtotal', vadcionais='$adcionais', vtotal='$totalg' WHERE idpedido='$id_cliente'");
 	if ($editarcor) {
+		unset($_SESSION['pedido_id_pdv']);
 		header("location: pdv.php");
 		exit;
 	}

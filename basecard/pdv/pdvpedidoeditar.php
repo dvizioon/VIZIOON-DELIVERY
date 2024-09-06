@@ -133,10 +133,12 @@ if (isset($_GET["apagaritem"]) && isset($_GET["iditem"])
 	}
 }
 // $_GET['idpedido'] = preg_replace("/[^0-9]/", "", $_GET['idpedido']);
-$_SESSION["id_cliente"] = $_GET['idpedido'];
+//mudar Session ID...
+$_SESSION["pedido_id_pdv"] = $_GET['idpedido'];
 
-$id_cliente     = $_SESSION['id_cliente'];
+$id_cliente     = $_SESSION["pedido_id_pdv"];
 $idPedido = $_GET['idpedido'];
+
 
 $empresa 		= $connect->query("SELECT * FROM config WHERE id='$idu'");
 $dadosempresa 	= $empresa->fetch(PDO::FETCH_OBJ);

@@ -12,6 +12,7 @@
     <input type="<?= $typeControl; ?>" name="mesa_pedido" value="<?= $pedido->pessoas; ?>">
     <input type="<?= $typeControl; ?>" name="data_registro" value="<?= date("d-m-Y H:i:s"); ?>">
     <input type="<?= $typeControl; ?>" name="nome_atendente" value="<?= $nome_funcionario; ?>">
+    <input type="<?= $typeControl; ?>" name="total_geral" value="<?= formatMoedaBr(formatCurrency($pedido->vtotal)) ?>">
     <?php
     if ($comissao_ativa) {
     ?>
@@ -33,7 +34,7 @@
         <p style="margin-left:10px;" align="left"><span class="tx-12"><b>Total Geral: </b> R$: <?= formatMoedaBr(formatCurrency(($pedido->vtotal))) ?></span></p>
     <?php } else { ?>
         <!-- <p style="margin-left:10px;" align="left"><span class="tx-12"><b>Total Geral: </b> R$: <?= formatMoedaBr(formatCurrency($pedido->vtotal)) ?></span></p> -->
-        <input type="<?= $typeControl; ?>" name="total_geral" value="<?= formatMoedaBr(formatCurrency($pedido->vtotal)) ?>">
+        <!-- <input type="<?= $typeControl; ?>" name="total_geral" value="<?= formatMoedaBr(formatCurrency($pedido->vtotal)) ?>"> -->
     <?php } ?>
     <?php if ($pedido->troco > 0) { ?>
         <p style="margin-left:10px;" align="left"><span class="tx-12"><b>Troco para: R$: </b><?= formatMoedaBr(formatCurrency($pedido->troco)) ?></span></p>

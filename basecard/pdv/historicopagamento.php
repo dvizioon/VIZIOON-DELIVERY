@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -106,6 +107,25 @@
             include_once('../../funcoes/Conexao.php');
             include_once('../../funcoes/Key.php');
 
+
+        function formatCurrency($num)
+        {
+            if (preg_match('/' . "," . '/', $num)) {
+                return formatValorMoedaDatabase($num);
+            } else {
+                $num = formatMoedaBr($num);
+                return formatValorMoedaDatabase($num);
+            }
+        }
+        function formatValorMoedaDatabase($num)
+        {
+            return str_replace(',', '.', preg_replace('#[^\d\,]#is', '', $num));
+        }
+        function formatMoedaBr($num)
+        {
+            return number_format($num, 2, ',', '.');
+        }
+
             function sanitize_input($input, $conexao)
             {
                 if (is_array($input)) {
@@ -188,13 +208,13 @@
                 <li class="list-group-item"><strong>Tipo Pedido:</strong> ' . htmlspecialchars($tipo) . '</li>
                 <li class="list-group-item"><strong>Mesa Registrada:</strong> ' . htmlspecialchars($mesa_registrada) . '</li>
                 <li class="list-group-item"><strong>Data Registro:</strong> ' . htmlspecialchars($data_registro) . '</li>
-                <li class="list-group-item"><strong>Subtotal Geral:</strong> R$ ' . htmlspecialchars($subtotal_formatado) . '</li>
-                <li class="list-group-item"><strong>Total Geral:</strong> R$ ' . htmlspecialchars($valor_total_formatado) . '</li>
+                <li class="list-group-item"><strong>Subtotal Geral:</strong> R$ ' . formatMoedaBr(formatCurrency(htmlspecialchars($subtotal_formatado))) . '</li>
+                <li class="list-group-item"><strong>Total Geral:</strong> R$ ' . formatMoedaBr(formatCurrency(htmlspecialchars($subtotal_formatado))). '</li>
                 <li class="list-group-item">
-                    <strong>Dinheiro em Caixa:</strong> R$ ' . (empty($valor_dinheiro) ? "0" : htmlspecialchars($valor_dinheiro)) . '
+                    <strong>Dinheiro em Caixa:</strong> R$ ' . (empty($valor_dinheiro) ? "0" : formatMoedaBr(formatCurrency(htmlspecialchars($valor_dinheiro)))) . '
                 </li>
                 <li class="list-group-item">
-                    <strong>Valor Troco:</strong> R$ ' . (empty($valor_troco) ? "0" : htmlspecialchars($valor_troco)) . '
+                    <strong>Valor Troco:</strong> R$ ' . (empty($valor_troco) ? "0" : formatMoedaBr(formatCurrency(htmlspecialchars($valor_troco)))) . '
                 </li>
             </ul>
             <h5 class="card-subtitle mb-2 text-muted">Dados dos Pagamentos:</h5>
@@ -211,7 +231,7 @@
                 <tfoot>
                     <tr>
                         <th>Valor Total</th>
-                        <th>R$ ' . htmlspecialchars($valor_total_formatado) . '</th>
+                        <th>R$ ' .  formatMoedaBr(formatCurrency(htmlspecialchars($valor_total_formatado))) . '</th>
                     </tr>
                 </tfoot>
             </table>

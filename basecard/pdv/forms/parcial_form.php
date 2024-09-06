@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data_registro = sanitize_input($_POST['data_registro'], $conexao);
     $subtotal_geral = sanitize_input($_POST['subtotal_geral'], $conexao);
     $total_geral = sanitize_input($_POST['total_geral'], $conexao);
-
+    // echo $total_geral;
     // Processar os dados de pagamento
     $dados = [];
     foreach ($metodoPagamento as $index => $metodo) {

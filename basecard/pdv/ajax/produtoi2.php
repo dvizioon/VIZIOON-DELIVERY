@@ -84,7 +84,7 @@ if (isset($_COOKIE['pdvx'])) {
     exit;
 }
 
-$id_cliente = $_SESSION['id_cliente'];
+$id_cliente = $_SESSION['pedido_id_pdv'];
 
 include_once('../../../funcoes/Conexao.php');
 include_once('../../../funcoes/Key.php');

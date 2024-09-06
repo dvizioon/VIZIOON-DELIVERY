@@ -1607,7 +1607,7 @@ $atendente_fechador_pedido = $pedidoData['atendente_fechador'];
 												echo '<thead>';
 												echo '<tr>';
 												echo '<th>Caixa Recebido</th>';
-												echo '<th>Troco</th>';
+												echo '<th>Troco para Repasse</th>';
 												echo '</tr>';
 												echo '</thead>';
 												echo '<tbody>';
