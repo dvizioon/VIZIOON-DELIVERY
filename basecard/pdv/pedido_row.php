@@ -77,7 +77,7 @@ function renderTable($pedidos)
             $status = "<button class=\"btn btn-purple btn-sm\">Entregue Cozinha</button>";
         } elseif ($pedidossx->status == 9) {
             $status_verificar = "Pagamento Incompleto";
-            $status = "<button class=\"btn btn-warning btn-sm\">Pagamento Incompleto</button>";
+            $status = "<button class=\"btn btn-warning btn-sm\">Parcial</button>";
         }
 
         // $delivery = $pedidossx->fpagamento == "DINHEIRO" || $pedidossx->fpagamento == "CARTAO" ? "<span style=\"color:#FF0000\">DELIVERY</span>" : $pedidossx->fpagamento;
@@ -97,7 +97,7 @@ function renderTable($pedidos)
         // echo $delivery;
 
         $nome = $pedidossx->nome;
-        $texto_truncado = truncarTexto($nome, 9, 5);
+        $texto_truncado = truncarTexto($nome, 7, 5);
 
         $data = $pedidossx->data;
         $hora = $pedidossx->hora;

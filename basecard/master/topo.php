@@ -115,7 +115,10 @@ $sitexx = HOME;
           <a href="liberarmesas.php" class="sidebar-nav-link"><i class="fa fa-table mg-r-10" style="font-size:16px"></i> Liberar Mesas</a>
         </li>
         <li class="sidebar-nav-item">
-        <!-- <li class="sidebar-nav-item">
+          <a href="deliveryAuto.php" class="sidebar-nav-link"><i class="fa fa-reply-all" aria-hidden="true" style="font-size:16px"></i> Usuário Delivery</a>
+        </li>
+        <li class="sidebar-nav-item">
+          <!-- <li class="sidebar-nav-item">
           <a href="pedidosFiltro.php" class="sidebar-nav-link"><i class="fa fa-filter mg-r-10" style="font-size:16px"></i> Relatorios Pedidos</a>
         </li> -->
         <li class="sidebar-nav-item">

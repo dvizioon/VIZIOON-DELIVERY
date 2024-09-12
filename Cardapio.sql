@@ -104,6 +104,27 @@ CREATE TABLE `comissao` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+
+-- --------------------------------------------------------
+--
+-- Estrutura para tabela `registroDados`
+--
+
+-- Tabela registroDados
+CREATE TABLE `registroDados` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idu` varchar(20) NOT NULL,
+  `nome` varchar(150) NOT NULL,
+  `bairro` varchar(150) NOT NULL,
+  `telefone` varchar(150) NOT NULL,
+  `endereco` varchar(150) NOT NULL,
+  `complemento` varchar(150) NOT NULL,
+  `cep` varchar(150) NOT NULL,
+  `casa` varchar(150) NOT NULL,
+  `primeiro_nome` varchar(150) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -249,6 +270,7 @@ CREATE TABLE `config` (
   `expiracao` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+ALTER TABLE `config` ADD COLUMN `auto_dados_delivery` ENUM('sim', 'nao') DEFAULT 'sim';
 
 --
 -- Estrutura para tabela `funcionarios`

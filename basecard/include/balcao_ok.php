@@ -65,6 +65,7 @@ if (isset($_POST["totalg"])) {
 	$pessoas = isset($pessoas) ? $pessoas : '0';
 	$obs = isset($obs) ? $obs : '';
 
+
 	// Preparar a consulta para inserção
 	$stmt = $connect->prepare("
     INSERT INTO pedidos (
@@ -99,7 +100,6 @@ if (isset($_POST["totalg"])) {
 		':vadcionais' => $adcionais,
 		':vtotal' => $totalg
 	]);
-
 
 
 

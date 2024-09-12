@@ -46,6 +46,54 @@ function removerAcentosEPontos($texto)
 	return strtoupper($texto);
 }
 ?>
+
+<style>
+	.loader {
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		position: relative;
+		animation: rotate 1s linear infinite
+	}
+
+	.loader::before {
+		content: "";
+		box-sizing: border-box;
+		position: absolute;
+		inset: 0px;
+		border-radius: 50%;
+		border: 5px solid #000;
+		animation: prixClipFix 2s linear infinite;
+	}
+
+	@keyframes rotate {
+		100% {
+			transform: rotate(360deg)
+		}
+	}
+
+	@keyframes prixClipFix {
+		0% {
+			clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0)
+		}
+
+		25% {
+			clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0)
+		}
+
+		50% {
+			clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%)
+		}
+
+		75% {
+			clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%)
+		}
+
+		100% {
+			clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0)
+		}
+	}
+</style>
 <div class="slim-navbar sticky-top" style="background-color:<?php print $dadosempresa->cormenu; ?>">
 	<div class="container">
 		<ul class="nav">
@@ -138,8 +186,6 @@ function removerAcentosEPontos($texto)
 
 				<div class="card card-people-list pd-15 mg-b-10">
 
-
-
 					<div class="row">
 						<div class="col-lg-12">
 							<div align="center"><i class="fa fa-hourglass-end mg-r-5" aria-hidden="true"></i>O Tempo aproximado para entrega é de <b><?php print $dadosempresa->timerdelivery; ?></b></div>
@@ -196,7 +242,7 @@ function removerAcentosEPontos($texto)
 
 								<div class="row">
 
-									<div class="col-lg-8">
+									<div class="col-lg-6">
 										<div class="form-group">
 											<label class="form-control-label">Bairro/Região: </label>
 											<div class="input-group">
@@ -231,13 +277,17 @@ function removerAcentosEPontos($texto)
 									<?php } ?>
 
 
-									<div class="col-lg-4">
+									<div class="col-lg-6">
 										<div class="form-group">
-											<label class="form-control-label">Informe seu CEP: </label>
+											<label class="form-control-label">Nº do seu WhatsApp: <span class="tx-danger">*</span></label>
 											<div class="input-group">
-												<input type="text" class="form-control" name="cep" id="cep" value="" maxlength="8">
 											</div>
+											<input type="text" id="cel" placeholder="(99)99999-9999" name="wps" class="form-control" <?php if (isset($_COOKIE['celcli'])) { ?> value="<?php print $_COOKIE['celcli']; ?>" <?php } ?> required>
 										</div>
+									</div>
+
+									<div class="loading-informaceos d-flex align-items-center gap-3 justify-content-center w-100 " style="gap:0.5rem;">
+
 									</div>
 
 								</div>
@@ -260,7 +310,7 @@ function removerAcentosEPontos($texto)
 										<div class="form-group">
 											<label class="form-control-label">Nº: <span class="tx-danger">*</span></label>
 											<div class="input-group">
-												<input type="number" class="form-control" name="numero" maxlength="5" <?php if (isset($_COOKIE['numero'])) { ?> value="<?php print $_COOKIE['numero']; ?>" <?php } ?> required>
+												<input type="number" class="form-control" id="casa" name="numero" maxlength="5" <?php if (isset($_COOKIE['numero'])) { ?> value="<?php print $_COOKIE['numero']; ?>" <?php } ?> required>
 											</div>
 										</div>
 									</div>
@@ -268,7 +318,7 @@ function removerAcentosEPontos($texto)
 									<div class="col-lg-9">
 										<div class="form-group">
 											<label class="form-control-label">Complemento/Ponto de Referência: </label>
-											<input class="form-control" type="text" name="complemento" <?php if (isset($_COOKIE['comp'])) { ?> value="<?php print $_COOKIE['comp']; ?>" <?php } ?> maxlength="50">
+											<input class="form-control" type="text" name="complemento" id="complemento" <?php if (isset($_COOKIE['comp'])) { ?> value="<?php print $_COOKIE['comp']; ?>" <?php } ?> maxlength="50">
 										</div>
 									</div>
 
@@ -277,19 +327,21 @@ function removerAcentosEPontos($texto)
 								<hr>
 
 								<div class="row">
-									<div class="col-lg-6">
+
+									<div class="col-lg-4">
 										<div class="form-group">
-											<label class="form-control-label">Nº do seu WhatsApp: <span class="tx-danger">*</span></label>
+											<label class="form-control-label">Informe seu CEP: </label>
 											<div class="input-group">
+												<input type="text" class="form-control" name="cep" id="cep" value="" maxlength="8">
 											</div>
-											<input type="text" id="cel" placeholder="(99)99999-9999" name="wps" class="form-control" <?php if (isset($_COOKIE['celcli'])) { ?> value="<?php print $_COOKIE['celcli']; ?>" <?php } ?> required>
 										</div>
 									</div>
+
 									<div class="col-lg-6">
 										<div class="form-group">
 											<label class="form-control-label">Primeiro Nome: <span class="tx-danger">*</span></label>
 											<div class="input-group">
-												<input type="text" name="nome" class="form-control" maxlength="30" <?php if (isset($_COOKIE['nomecli'])) { ?> value="<?php print $_COOKIE['nomecli']; ?>" <?php } ?> required>
+												<input type="text" id="nome" name="nome" class="form-control" maxlength="30" <?php if (isset($_COOKIE['nomecli'])) { ?> value="<?php print $_COOKIE['nomecli']; ?>" <?php } ?> required>
 											</div>
 										</div>
 									</div>
@@ -321,12 +373,6 @@ function removerAcentosEPontos($texto)
 									</div>
 								</div>
 
-
-
-
-
-
-
 								<input type="hidden" name="cidade" value="<?php echo $dadosempresa->cidade; ?>">
 								<input type="hidden" name="uf" value="<?php echo $dadosempresa->uf; ?>">
 
@@ -338,11 +384,13 @@ function removerAcentosEPontos($texto)
 
 			</div>
 
+
+
 			<div class="col-md-3">
 				<div class="card card-people-list pd-15 mg-b-10" style="background-color:<?php print $dadosempresa->corcarrinho; ?>">
 					<input type="hidden" name="subtotal" class="form-control" value="<?php echo $subtotal = number_format($somando->soma, 2, ',', ' ');  ?>">
 					<?php
-					echo "ID Pedido: " . $id_cliente;
+					echo "<span class='border border-info p-2 rounded mb-2'><strong>ID Pedido: " . $id_cliente . "</strong></span>";
 					$opcionais  = $connect->query("SELECT valor, quantidade FROM store_o WHERE ids = '" . $id_cliente . "' AND status = '0' AND idu='$idu' AND meioameio='0'");
 					$sumx = 0;
 					while ($valork = $opcionais->fetch(PDO::FETCH_OBJ)) {
@@ -384,3 +432,68 @@ function removerAcentosEPontos($texto)
 			</div>
 		</div>
 	</div>
+
+
+
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			// Quando o campo de telefone perde o foco (blur), enviamos a requisição
+			$('#cel').on('blur', function() {
+				var telefone = $(this).val();
+
+				// Remove os parênteses, espaços e traços do telefone
+				telefone = telefone.replace(/[^\d]/g, '');
+
+				const loadingUser = $(".loading-informaceos");
+
+				loadingUser.html(`
+					<span class="loader"></span>
+					<p>Carregando Dados...</p>
+				`)
+
+				// Verifica se o telefone não está vazio
+				if (telefone) {
+					// Faz a requisição AJAX usando jQuery
+					$.ajax({
+						url: './include/verificarTelefone.php', // URL do arquivo PHP que processará a requisição
+						type: 'POST', // Método de envio
+						data: {
+							telefone: telefone,
+							id_empresa: <?php echo $idu; ?>
+						}, // Dados que estão sendo enviados
+						dataType: 'json', // Espera que a resposta seja um JSON
+						success: function(response) {
+							// Manipula a resposta recebida do servidor
+							// console.log("Resposta do servidor: ", response);
+
+							// Verifica se a resposta indica que o telefone existe
+							if (response.existe) {
+								// Exibe a modal informando que o telefone foi encontrado
+								setTimeout(() => loadingUser.html(``), 2000)
+
+								$('#nome').val(response.nome);
+								$('#rua').val(response.bairro);
+								$('#endereco').val(response.endereco);
+								$('#complemento').val(response.complemento);
+								$('#cep').val(response.cep);
+								$('#casa').val(response.casa);
+								$('#primeiro_nome').val(response.primeiro_nome);
+
+							} else {
+								loadingUser.html(``)
+								// Não exibe a modal se o telefone não for encontrado
+								// alert('Número de telefone não encontrado.');
+							}
+						},
+						error: function(xhr, status, error) {
+							console.error("Erro na requisição AJAX: ", status, error);
+							alert('Erro ao buscar os dados. Tente novamente.');
+						}
+					});
+				}
+			});
+		});
+	</script>

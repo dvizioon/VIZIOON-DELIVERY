@@ -354,6 +354,7 @@ $status_parcial = isset($status) ? $status : '';
 $nome_funcionario = isset($_SESSION['nome_funcionario']) ? $_SESSION['nome_funcionario'] : "Sem Nome";
 // echo $nome_funcionario;
 // Consulta para obter a comissão ativa
+
 $query_comissao = "
 SELECT comissao
 FROM comissao
@@ -1077,196 +1078,274 @@ $atendente_fechador_pedido = $pedidoData['atendente_fechador'];
 
 					<?php  } else if ($status_parcial === "2") { ?>
 						<!-- Se o Status parcial existe ou seja o registro de pagamento  -->
-						<div class="col-md-6">
-							<div class="card card-people-list pd-15 mg-b-10">
-								<label class="section-title" style="margin-top:-1px"><i class="fa fa-check-square-o" aria-hidden="true"></i> ALTERAR STATUS DO PEDIDO</label>
-								<hr>
-								<h1 class="text-warning">Complete o Pedido Parcial...</h1>
-							</div>
-
-
-							<div class="card card-people-list pd-15 mg-b-10">
-								<label class="section-title" style="margin-top:-1px"><i class="fa fa-check-square-o" aria-hidden="true"></i> ALTERAR STATUS DO PEDIDO</label>
-								<hr>
-								<div class="row">
-									<div class="col-md-4">
-
-										<?php
-										$nome = str_replace('%20', ' ', $pedido->nome);
-										?>
-
-										<button class="btn btn-purple btn-block" onclick="openModal()">Finalizar Pedido</button>
-
-										<div id="modal_finalizacao" class="modal_finalizacao">
-
-											<div class="modal_finalizacao-content">
-												<p style="border:1px solid #ccc;padding:1rem; margin-bottom:1rem;">Tem certeza que deseja finalizar este pedido? Isso liberará a mesa para outros pedidos. Esta ação é irreversível. Se deseja sinalizar o pedido como finalizado, significa que a mesa será liberada, mesmo que ainda esteja sendo utilizada por outras pessoas. ⚠️</p>
-												<div class="modal_finalizacao-header">
-													<span class="modal_finalizacao-close" onclick="closeModal()">&times;</span>
-													<h2>Finalizar Pedido Parcial</h2>
-												</div>
-												<div class="modal_finalizacao-body">
-													<div class="info-container">
-														<?php if ($pedido->taxa > 0) { ?>
-															<p class="info-text"><span class="info-label">Taxa de Entrega: </span> R$: <?= formatMoedaBr(formatCurrency($pedido->taxa)) ?></p>
-															<p class="info-text"><span class="info-label">Total Geral: </span> R$: <?= formatMoedaBr(formatCurrency($pedido->vtotal)) ?></p>
-														<?php } else { ?>
-															<div class="grapichsModalFat">
-
-
-																<div class="grapichsModal">
-																	<p>Total:<?= formatMoedaBr(formatCurrency($pedido->vtotal)) ?></p>
-																</div>
-																<div class="grapichsModal">
-																	<p>Pago:<?= formatMoedaBr(formatCurrency($valor_total_pago == "0" ? $valor_total_pago : $valor_total_pago)) ?></p>
-																</div>
-																<div class="grapichsModal">
-																	<p>Pendente:<?= formatMoedaBr(formatCurrency($valor_total_pago == "0" ? 0 : $pedido->vtotal - $valor_total_pago)) ?></p>
-																</div>
-															</div>
-														<?php } ?>
-													</div>
-													<div class="modal_finalizacao-tabs">
-														<div class="tab-buttons">
-
-															<button class="modal_finalizacao-tablink" onclick="openTab(event, 'modal_finalizacao-parcial')">Pagamento Parcial</button>
-														</div>
-													</div>
-
-													<!-- Método Parcial -->
-													<div id="modal_finalizacao-parcial" class="modal_finalizacao-tabcontent" style="display: block;">
-														<?php require_once("./modal/modal_parcial.php"); ?>
-													</div>
-
-												</div>
-											</div>
+						<!-- Primeiro vou verificar se é igual a 1 para aceitar o pedido novo -->
+						<?php if ($pedido->status == 1) { ?>
+							<!-- se o status de pedido geral for maior que 1 ou seja ele tá disponivel e não pode ser cancelado -->
+							<div class="col-md-6">
+								<div class="card card-people-list pd-15 mg-b-10">
+									<label class="section-title" style="margin-top:-1px"><i class="fa fa-check-square-o" aria-hidden="true"></i> ALTERAR STATUS DO PEDIDO</label>
+									<hr>
+									<p style="border:1px solid #ccc;padding:1rem; margin-bottom:1rem;"><strong><?php echo isset($_SESSION['nome_funcionario']) ? $_SESSION['nome_funcionario'] : "" ?></strong> Analisamos é Percebemos que Existe um pagamento parcial para esse pedido 🔰</p>
+									<p style="border:1px solid #ccc;padding:1rem; margin-bottom:1rem;">Para Iniciar o Atendimento é necessário que você aceite o pedido. ✅</p>
+									<div>
+										<div class="d-flex w-100" style="justify-content:center;">
+											<form action="" method="post" class="d-flex w-100" style="justify-content:center;">
+												<input type="hidden" name="andamento" value="<?= $codigop; ?>">
+												<input type="hidden" id="celular" value="<?= $celcli; ?>">
+												<input type="hidden" id="mensagem" value="<?= $msg1; ?>">
+												<button type="submit" class="btn btn-warning w-100" onClick="<?php echo $delivery == "DELIVERY" ? "enviarMensagem()" : "" ?>">Aceitar Pedido</button>
+											</form>
 										</div>
 
-
-										<script>
-											function openModal() {
-												document.getElementById("modal_finalizacao").style.display = "flex";
-											}
-
-											function closeModal() {
-												document.getElementById("modal_finalizacao").style.display = "none";
-											}
-
-											function openTab(evt, tabName) {
-												var i, tabcontent, tablinks;
-												tabcontent = document.getElementsByClassName("modal_finalizacao-tabcontent");
-												for (i = 0; i < tabcontent.length; i++) {
-													tabcontent[i].style.display = "none";
-												}
-												tablinks = document.getElementsByClassName("modal_finalizacao-tablink");
-												for (i = 0; i < tablinks.length; i++) {
-													tablinks[i].className = tablinks[i].className.replace(" active", "");
-												}
-												document.getElementById(tabName).style.display = "block";
-												evt.currentTarget.className += " active";
-											}
-										</script>
-
-									</div>
-									<div class="col-md-4" align="center" style="font-size:20px; margin-top:5px;"><i class="fa fa-arrow-left mg-r-10" aria-hidden="true"></i><i class="fa fa-cutlery" aria-hidden="true"><i class="fa fa-arrow-right mg-l-10" aria-hidden="true"></i></i>
-									</div>
-									<div class="col-md-4">
-										<form action="" method="post">
-
-											<button type="button" class="btn btn-danger btn-block">Alterar Pedido</button>
-										</form>
 									</div>
 								</div>
 							</div>
+						<?php } else { ?>
+							<div class="col-md-6">
+								<div class="card card-people-list pd-15 mg-b-10">
+									<label class="section-title" style="margin-top:-1px"><i class="fa fa-check-square-o" aria-hidden="true"></i> ALTERAR STATUS DO PEDIDO</label>
+									<hr>
+									<h1 class="text-warning">Complete o Pedido Parcial...</h1>
+								</div>
 
-							<div class="modal_finalizacao-header">
-								<h4>Parcelas adicionadas...</h4>
-							</div>
 
-							<?php
+								<div class="card card-people-list pd-15 mg-b-10">
+									<label class="section-title" style="margin-top:-1px"><i class="fa fa-check-square-o" aria-hidden="true"></i> ALTERAR STATUS DO PEDIDO</label>
+									<hr>
+									<div class="row">
+										<div class="col-md-4">
+
+											<?php
+											$nome = str_replace('%20', ' ', $pedido->nome);
+											?>
+
+											<button class="btn btn-purple btn-block" onclick="openModal()">Finalizar Pedido</button>
+
+											<div id="modal_finalizacao" class="modal_finalizacao">
+
+												<div class="modal_finalizacao-content">
+													<p style="border:1px solid #ccc;padding:1rem; margin-bottom:1rem;">Tem certeza que deseja finalizar este pedido? Isso liberará a mesa para outros pedidos. Esta ação é irreversível. Se deseja sinalizar o pedido como finalizado, significa que a mesa será liberada, mesmo que ainda esteja sendo utilizada por outras pessoas. ⚠️</p>
+													<div class="modal_finalizacao-header">
+														<span class="modal_finalizacao-close" onclick="closeModal()">&times;</span>
+														<h2>Finalizar Pedido Parcial</h2>
+													</div>
+													<div class="modal_finalizacao-body">
+														<div class="info-container">
+															<?php if ($pedido->taxa > 0) { ?>
+																<p class="info-text"><span class="info-label">Taxa de Entrega: </span> R$: <?= formatMoedaBr(formatCurrency($pedido->taxa)) ?></p>
+																<p class="info-text"><span class="info-label">Total Geral: </span> R$: <?= formatMoedaBr(formatCurrency($pedido->vtotal)) ?></p>
+															<?php } else { ?>
+																<div class="grapichsModalFat">
 
 
-							// Variáveis globais
-							global $connect, $codigop, $pedido, $dados_pagamentos_json;
+																	<div class="grapichsModal">
+																		<p>Total:<?= formatMoedaBr(formatCurrency($pedido->vtotal)) ?></p>
+																	</div>
+																	<div class="grapichsModal">
+																		<p>Pago:<?= formatMoedaBr(formatCurrency($valor_total_pago == "0" ? $valor_total_pago : $valor_total_pago)) ?></p>
+																	</div>
+																	<div class="grapichsModal">
+																		<p>Pendente:<?= formatMoedaBr(formatCurrency($valor_total_pago == "0" ? 0 : $pedido->vtotal - $valor_total_pago)) ?></p>
+																	</div>
+																</div>
+															<?php } ?>
+														</div>
+														<div class="modal_finalizacao-tabs">
+															<div class="tab-buttons">
 
-							// Função para processar a remoção
-							function processarRemocao($dados_pagamentos_json, $index_remocao)
-							{
-								if (isset($dados_pagamentos_json['dados'][$index_remocao])) {
-									unset($dados_pagamentos_json['dados'][$index_remocao]);
-									$dados_pagamentos_json['dados'] = array_values($dados_pagamentos_json['dados']); // Reindexa o array
+																<button class="modal_finalizacao-tablink" onclick="openTab(event, 'modal_finalizacao-parcial')">Pagamento Parcial</button>
+															</div>
+														</div>
+
+														<!-- Método Parcial -->
+														<div id="modal_finalizacao-parcial" class="modal_finalizacao-tabcontent" style="display: block;">
+															<?php require_once("./modal/modal_parcial.php"); ?>
+														</div>
+
+													</div>
+												</div>
+											</div>
+
+
+											<script>
+												function openModal() {
+													document.getElementById("modal_finalizacao").style.display = "flex";
+												}
+
+												function closeModal() {
+													document.getElementById("modal_finalizacao").style.display = "none";
+												}
+
+												function openTab(evt, tabName) {
+													var i, tabcontent, tablinks;
+													tabcontent = document.getElementsByClassName("modal_finalizacao-tabcontent");
+													for (i = 0; i < tabcontent.length; i++) {
+														tabcontent[i].style.display = "none";
+													}
+													tablinks = document.getElementsByClassName("modal_finalizacao-tablink");
+													for (i = 0; i < tablinks.length; i++) {
+														tablinks[i].className = tablinks[i].className.replace(" active", "");
+													}
+													document.getElementById(tabName).style.display = "block";
+													evt.currentTarget.className += " active";
+												}
+											</script>
+
+										</div>
+										<div class="col-md-4" align="center" style="font-size:20px; margin-top:5px;"><i class="fa fa-arrow-left mg-r-10" aria-hidden="true"></i><i class="fa fa-cutlery" aria-hidden="true"><i class="fa fa-arrow-right mg-l-10" aria-hidden="true"></i></i>
+										</div>
+										<div class="col-md-4">
+											<a href="pdvpedidoeditar.php?idpedido=<?php print $pedido->idpedido; ?>"><button class="btn btn-danger btn-block">Alterar Pedido</button></a>
+										</div>
+
+
+									</div>
+								</div>
+
+								<?php
+
+
+								// Verifica se o formulário foi enviado
+								if (isset($_POST['mudar-forma-pagamento']) && !empty($_POST['codigop'])) {
+									// Captura os valores do formulário
+									$codigop = $_POST['codigop'];
+
+									// Consulta para verificar se o pedido existe
+									$sql = "SELECT * FROM `registrospagamentos` WHERE `idpedido` = :idpedido";
+									$stmt = $connect->prepare($sql);
+									$stmt->bindParam(':idpedido', $codigop);
+									$stmt->execute();
+									$registroPagamento = $stmt->fetch(PDO::FETCH_ASSOC);
+
+									// Verifica se o registro foi encontrado
+									if ($registroPagamento) {
+										// Apaga o registro existente
+										$sqlDeletar = "DELETE FROM `registrospagamentos` WHERE `idpedido` = :idpedido";
+										$stmtDeletar = $connect->prepare($sqlDeletar);
+										$stmtDeletar->bindParam(':idpedido', $codigop);
+										$update = $connect->query("UPDATE pedidos SET status='2' WHERE idpedido='" . $codigop . "'");
+
+										if ($stmtDeletar->execute()) {
+											// Redireciona para a página pdv.php usando JavaScript
+											echo '<script type="text/javascript">';
+											echo 'window.location.href = "pdv.php";'; // Redirecionamento
+											echo '</script>';
+											exit();
+										} else {
+											echo "Erro ao apagar o registro de pagamento.";
+										}
+									} else {
+										echo "Pedido não encontrado.";
+									}
 								}
+								?>
 
-								return $dados_pagamentos_json;
-							}
 
-							// Função para salvar os dados no banco de dados
-							function salvarDadosNoBanco($idpedido, $dados_pagamentos_json)
-							{
-								global $connect;
-								$dados_pagamentos_atualizados = json_encode($dados_pagamentos_json, JSON_UNESCAPED_UNICODE);
+								<div class="card p-4 shadow-sm">
+									<h4 class="card-title mb-3">Mudar Forma de Pagamento</h4>
+									<form action="./verpedido.php" method="POST">
+										<div class="mb-3">
+											<label for="formaPagamento" class="form-label">Selecione a forma de pagamento</label>
+											<select name="mudar-forma-pagamento" id="formaPagamento" class="form-select">
+												<option value="">Selecione...</option>
+												<option value="rateio">Rateio</option>
+												<option value="a vista">À vista</option>
+											</select>
+											<input type="hidden" name="codigop" value="<?php print htmlspecialchars($codigop); ?>">
+										</div>
+										<button type="submit" class="btn btn-primary w-100">Mudar Forma de Pagamento</button>
+									</form>
+								</div>
 
-								$sql = "UPDATE registrospagamentos SET dados_pagamentos = :dados_pagamentos WHERE idpedido = :idpedido";
-								$stmt = $connect->prepare($sql);
-								$stmt->bindParam(':dados_pagamentos', $dados_pagamentos_atualizados);
-								$stmt->bindParam(':idpedido', $idpedido);
-								$stmt->execute();
-							}
+								<div class="card p-4 shadow-sm mt-3">
+									<h4 class="card-title mb-3">Parcelas adicionadas...</h4>
+									<?php
 
-							// Verifica se o botão de remoção foi pressionado
-							if (isset($_POST['remover'])) {
-								$index_remocao = intval($_POST['remover']);
-								$dados_pagamentos_json = processarRemocao($dados_pagamentos_json, $index_remocao);
 
-								// Exemplo de idpedido (substitua conforme necessário)
-								$idpedido = $pedido->idpedido; // substitua pelo idpedido correto
-								salvarDadosNoBanco($idpedido, $dados_pagamentos_json);
+									// Variáveis globais
+									global $connect, $codigop, $pedido, $dados_pagamentos_json;
 
-								// Redireciona para a mesma página para atualizar a lista
-								echo '<form id="reloadForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
-								echo '<input type="hidden" name="codigop" value="' . htmlspecialchars($codigop) . '">';
-								echo '</form>';
-								echo '<script type="text/javascript">document.getElementById("reloadForm").submit();</script>';
-								exit();
-							}
+									// Função para processar a remoção
+									function processarRemocao($dados_pagamentos_json, $index_remocao)
+									{
+										if (isset($dados_pagamentos_json['dados'][$index_remocao])) {
+											unset($dados_pagamentos_json['dados'][$index_remocao]);
+											$dados_pagamentos_json['dados'] = array_values($dados_pagamentos_json['dados']); // Reindexa o array
+										}
 
-							// Função para gerar HTML
-							function gerarListaComRemocao($dados_pagamentos_json)
-							{
-								global $codigop;
-								if (isset($dados_pagamentos_json['dados']) && is_array($dados_pagamentos_json['dados'])) {
-									$html = '<form method="post" action="" style="max-width: 600px; margin: auto; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">';
-									$html .= '<table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">';
-									$html .= '<thead><tr style="background-color: #f8f8f8;"><th style="padding: 10px; border: 1px solid #ddd;">Método</th><th style="padding: 10px; border: 1px solid #ddd;">Quantidade</th><th style="padding: 10px; border: 1px solid #ddd;">Ação</th></tr></thead>';
-									$html .= '<tbody>';
-									$html .= '<input type="hidden" name="codigop" value="' . htmlspecialchars($codigop) . '">';
-
-									foreach ($dados_pagamentos_json['dados'] as $index => $pagamento) {
-										$metodo = htmlspecialchars($pagamento['metodo']);
-										$quantidade = htmlspecialchars($pagamento['quantidade']);
-										$html .= '<tr>';
-										$html .= '<td style="padding: 10px; border: 1px solid #ddd;">' . $metodo . '</td>';
-										$html .= '<td style="padding: 10px; border: 1px solid #ddd;">R$ ' . $quantidade . '</td>';
-										$html .= '<td style="padding: 10px; border: 1px solid #ddd;"><button type="submit" name="remover" value="' . $index . '" style="padding: 5px 10px; background-color: #ff4d4d; color: white; border: none; border-radius: 3px; cursor: pointer;">Remover</button></td>';
-										$html .= '</tr>';
+										return $dados_pagamentos_json;
 									}
 
-									$html .= '</tbody>';
-									$html .= '</table>';
-									$html .= '</form>';
+									// Função para salvar os dados no banco de dados
+									function salvarDadosNoBanco($idpedido, $dados_pagamentos_json)
+									{
+										global $connect;
+										$dados_pagamentos_atualizados = json_encode($dados_pagamentos_json, JSON_UNESCAPED_UNICODE);
 
-									return $html;
-								} else {
-									return 'Dados inválidos.';
-								}
-							}
+										$sql = "UPDATE registrospagamentos SET dados_pagamentos = :dados_pagamentos WHERE idpedido = :idpedido";
+										$stmt = $connect->prepare($sql);
+										$stmt->bindParam(':dados_pagamentos', $dados_pagamentos_atualizados);
+										$stmt->bindParam(':idpedido', $idpedido);
+										$stmt->execute();
+									}
 
-							// Gera o HTML
-							echo gerarListaComRemocao($dados_pagamentos_json);
-							?>
+									// Verifica se o botão de remoção foi pressionado
+									if (isset($_POST['remover'])) {
+										$index_remocao = intval($_POST['remover']);
+										$dados_pagamentos_json = processarRemocao($dados_pagamentos_json, $index_remocao);
 
+										// Exemplo de idpedido (substitua conforme necessário)
+										$idpedido = $pedido->idpedido; // substitua pelo idpedido correto
+										salvarDadosNoBanco($idpedido, $dados_pagamentos_json);
 
-						</div>
+										// Redireciona para a mesma página para atualizar a lista
+										echo '<form id="reloadForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">';
+										echo '<input type="hidden" name="codigop" value="' . htmlspecialchars($codigop) . '">';
+										echo '</form>';
+										echo '<script type="text/javascript">document.getElementById("reloadForm").submit();</script>';
+										exit();
+									}
+
+									// Função para gerar HTML
+									function gerarListaComRemocao($dados_pagamentos_json)
+									{
+										global $codigop;
+										if (isset($dados_pagamentos_json['dados']) && is_array($dados_pagamentos_json['dados'])) {
+											$html = '<form method="post" action="" style="max-width: 600px; margin: auto; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">';
+											$html .= '<table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">';
+											$html .= '<thead><tr style="background-color: #f8f8f8;"><th style="padding: 10px; border: 1px solid #ddd;">Método</th><th style="padding: 10px; border: 1px solid #ddd;">Quantidade</th><th style="padding: 10px; border: 1px solid #ddd;">Ação</th></tr></thead>';
+											$html .= '<tbody>';
+											$html .= '<input type="hidden" name="codigop" value="' . htmlspecialchars($codigop) . '">';
+
+											foreach ($dados_pagamentos_json['dados'] as $index => $pagamento) {
+												$metodo = htmlspecialchars($pagamento['metodo']);
+												$quantidade = htmlspecialchars($pagamento['quantidade']);
+												$html .= '<tr>';
+												$html .= '<td style="padding: 10px; border: 1px solid #ddd;">' . $metodo . '</td>';
+												$html .= '<td style="padding: 10px; border: 1px solid #ddd;">R$ ' . $quantidade . '</td>';
+												$html .= '<td style="padding: 10px; border: 1px solid #ddd;"><button type="submit" name="remover" value="' . $index . '" style="padding: 5px 10px; background-color: #ff4d4d; color: white; border: none; border-radius: 3px; cursor: pointer;">Remover</button></td>';
+												$html .= '</tr>';
+											}
+
+											$html .= '</tbody>';
+											$html .= '</table>';
+											$html .= '</form>';
+
+											return $html;
+										} else {
+											return 'Dados inválidos.';
+										}
+									}
+
+									// Gera o HTML
+									echo gerarListaComRemocao($dados_pagamentos_json);
+
+									?>
+
+								</div>
+
+							</div>
+						<?php } ?>
 						<!-- Se o Status parcial 5 ou seja o registro de pagamento foi finalizado  -->
 					<?php  } else if ($status_parcial === "5") { ?>
 					<?php  } ?>
@@ -1675,71 +1754,71 @@ $atendente_fechador_pedido = $pedidoData['atendente_fechador'];
 									?>
 
 									<?php
-										if ($carpro2->pedido_entregue_funcionario == "nao") {
+									if ($carpro2->pedido_entregue_funcionario == "nao") {
 									?>
 
-											<div class="<?php echo $carpro2->pedido_entregue == "sim" ? "border-success rounded my-2 position-relative" : "" ?>" style="<?php echo $carpro2->pedido_entregue == "sim" ? "border:2px solid" : "" ?>">
-												<p style="margin-left:10px;" align="left"><span class="tx-12"><b>** Item:</b> <?php print $nomeprox2->nome; ?></span></p>
+										<div class="<?php echo $carpro2->pedido_entregue == "sim" ? "border-success rounded my-2 position-relative" : "" ?>" style="<?php echo $carpro2->pedido_entregue == "sim" ? "border:2px solid" : "" ?>">
+											<p style="margin-left:10px;" align="left"><span class="tx-12"><b>** Item:</b> <?php print $nomeprox2->nome; ?></span></p>
 
-												<?php
-													if ($carpro2->pedido_entregue == "sim") {
-														echo '<div class="bg-dark text-light rounded" style="position:absolute;top:0;margin:0.5rem 0 0 0;right:2%;padding:0.5rem;font-size:1rem;">
+											<?php
+											if ($carpro2->pedido_entregue == "sim") {
+												echo '<div class="bg-dark text-light rounded" style="position:absolute;top:0;margin:0.5rem 0 0 0;right:2%;padding:0.5rem;font-size:1rem;">
 																<i class="fa fa-cutlery" aria-hidden="true"></i>
 															  </div>';
-													};
-												
-												?>
-												
+											};
 
-												<?php if ($carpro2->tamanho != "N") { ?>
+											?>
 
-													<p style="margin-left:10px;" align="left"><span class="tx-12"><b>- Tamanho:</b> <?php print $carpro2->tamanho; ?></span></p>
 
-												<?php } ?>
+											<?php if ($carpro2->tamanho != "N") { ?>
 
-												<p style="margin-left:10px;" align="left"><span class="tx-12"><b>- Qnt:</b> <?php print $carpro2->quantidade; ?></span></p>
+												<p style="margin-left:10px;" align="left"><span class="tx-12"><b>- Tamanho:</b> <?php print $carpro2->tamanho; ?></span></p>
 
-												<?php if ($carpro2->obs) { ?>
-													<p style="margin-left:10px;" align="left"><span class="tx-12"><b>- Obs:</b> <?php echo $carpro2->obs; ?></span></p>
-												<?php } else { ?>
-													<p style="margin-left:10px;" align="left"><span class="tx-12"><b>- Obs:</b> Não</span></p>
-												<?php } ?>
+											<?php } ?>
 
-												<?php
-												$meiom2  = $connect->query("SELECT * FROM store_o WHERE idp = '" . $carpro2->idpedido . "' AND status = '1' AND idu='$cod_id' AND meioameio='1'AND id_referencia='" . $carpro2->referencia . "'");
-												$meiomc2 = $meiom2->rowCount();
-												?>
+											<p style="margin-left:10px;" align="left"><span class="tx-12"><b>- Qnt:</b> <?php print $carpro2->quantidade; ?></span></p>
 
-												<?php if ($meiomc2 > 0) { ?>
-													<p style="margin-left:10px;" align="left"><span class="tx-12"><b>* <?= $meiomc2; ?> Sabores:</b></span></p>
-													<p style="margin-left:10px;" align="left"><span class="tx-12">
-															<?php while ($meiomv2 = $meiom2->fetch(PDO::FETCH_OBJ)) { ?>
-																<?= $meiomv2->nome . "<br>"; ?>
-															<?php } ?>
-														</span></p>
-												<?php } ?>
+											<?php if ($carpro2->obs) { ?>
+												<p style="margin-left:10px;" align="left"><span class="tx-12"><b>- Obs:</b> <?php echo $carpro2->obs; ?></span></p>
+											<?php } else { ?>
+												<p style="margin-left:10px;" align="left"><span class="tx-12"><b>- Obs:</b> Não</span></p>
+											<?php } ?>
 
-												<?php
-												$adcionais2  = $connect->query("SELECT * FROM store_o WHERE idp = '" . $carpro2->idpedido . "' AND status = '1' AND idu='$cod_id' AND meioameio='0' AND id_referencia='$carpro2->referencia' ");
-												$adcionaisc2 = $adcionais2->rowCount();
-												// print $adcionaisc2;
-												?>
+											<?php
+											$meiom2  = $connect->query("SELECT * FROM store_o WHERE idp = '" . $carpro2->idpedido . "' AND status = '1' AND idu='$cod_id' AND meioameio='1'AND id_referencia='" . $carpro2->referencia . "'");
+											$meiomc2 = $meiom2->rowCount();
+											?>
 
-												<?php if ($adcionaisc2 > 0) { ?>
-													<p style="margin-left:10px;" align="left"><span class="tx-12"><b>* Adicionais/Ingredientes:</b></p>
-													<p style="margin-left:10px;" align="left"><span class="tx-12">
-															<?php while ($adcionaisv2 = $adcionais2->fetch(PDO::FETCH_OBJ)) { ?>
-																<?= "- " . $adcionaisv2->nome . "<br>"; ?>
-															<?php } ?>
-														</span></p>
-												<?php } ?>
-												<center>=========================</center>
-												</p>
-											</div>
+											<?php if ($meiomc2 > 0) { ?>
+												<p style="margin-left:10px;" align="left"><span class="tx-12"><b>* <?= $meiomc2; ?> Sabores:</b></span></p>
+												<p style="margin-left:10px;" align="left"><span class="tx-12">
+														<?php while ($meiomv2 = $meiom2->fetch(PDO::FETCH_OBJ)) { ?>
+															<?= $meiomv2->nome . "<br>"; ?>
+														<?php } ?>
+													</span></p>
+											<?php } ?>
+
+											<?php
+											$adcionais2  = $connect->query("SELECT * FROM store_o WHERE idp = '" . $carpro2->idpedido . "' AND status = '1' AND idu='$cod_id' AND meioameio='0' AND id_referencia='$carpro2->referencia' ");
+											$adcionaisc2 = $adcionais2->rowCount();
+											// print $adcionaisc2;
+											?>
+
+											<?php if ($adcionaisc2 > 0) { ?>
+												<p style="margin-left:10px;" align="left"><span class="tx-12"><b>* Adicionais/Ingredientes:</b></p>
+												<p style="margin-left:10px;" align="left"><span class="tx-12">
+														<?php while ($adcionaisv2 = $adcionais2->fetch(PDO::FETCH_OBJ)) { ?>
+															<?= "- " . $adcionaisv2->nome . "<br>"; ?>
+														<?php } ?>
+													</span></p>
+											<?php } ?>
+											<center>=========================</center>
+											</p>
+										</div>
 
 									<?php
 
-										}
+									}
 
 									?>
 

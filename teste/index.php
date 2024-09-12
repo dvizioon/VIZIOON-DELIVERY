@@ -24,6 +24,7 @@ date_default_timezone_set('' . $dadosempresa->fuso . '');
 	<link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet">
 	<link href="lib/select2/css/select2.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/slim.css">
+	
 </head>
 
 <body style="background-color:<?php print $dadosempresa->corfundo; ?>">

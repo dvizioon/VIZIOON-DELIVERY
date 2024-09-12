@@ -26,6 +26,8 @@ if (isset($_POST["totalg"])) {
 	$rua = $_POST['rua'];
 	$bairro = $_POST['bairro'];
 	$complemento = $_POST['complemento'] ?? "";
+	$cep = $_POST['cep'] ?? "";
+	$primeiro_nome = $_POST['nome'] ?? "";
 
 	$cookies = [
 		"nomecli" => $nome,
@@ -106,6 +108,91 @@ if (isset($_POST["totalg"])) {
 		':adcionaisx' => $adcionaisx,
 		':totalgx' => $totalgx
 	]);
+
+
+	// Insere os novos dados no banco de dados
+	// $insertDadosRegistro = $connect->prepare("INSERT INTO registroDados (telefone, idu, nome, bairro, endereco, complemento, cep, casa, primeiro_nome) 
+	//                                      VALUES (:telefone, :idu, :nome, :bairro, :endereco, :complemento, :cep, :casa, :primeiro_nome)");
+	// $insertDadosRegistro->execute([
+	// 	'telefone' => $wps,
+	// 	'idu' => $idu,
+	// 	'nome' => $nome,
+	// 	'bairro' => $bairro,
+	// 	'endereco' => $rua,
+	// 	'complemento' => $complemento,
+	// 	'cep' => $cep,
+	// 	'casa' => $numero,
+	// 	'primeiro_nome' => $primeiro_nome
+	// ]);
+
+	if (isset($wps) && isset($idu)) {
+		// Primeiro, vamos verificar se o telefone já existe na empresa específica
+		$query = $connect->prepare("SELECT * FROM registroDados WHERE telefone = :telefone AND idu = :idu");
+		$query->execute(['telefone' => $wps, 'idu' => $idu]);
+
+		$registro = $query->fetch(PDO::FETCH_ASSOC);
+
+		if ($registro) {
+			// Verificamos se os dados são diferentes dos existentes no banco
+			$dadosAtualizados = [];
+
+			if ($registro['nome'] !== $nome
+			) {
+				$dadosAtualizados['nome'] = $nome;
+			}
+			if ($registro['bairro'] !== $bairro
+			) {
+				$dadosAtualizados['bairro'] = $bairro;
+			}
+			if ($registro['endereco'] !== $rua) {
+				$dadosAtualizados['endereco'] = $rua;
+			}
+			if ($registro['complemento'] !== $complemento) {
+				$dadosAtualizados['complemento'] = $complemento;
+			}
+			if ($registro['cep'] !== $cep) {
+				$dadosAtualizados['cep'] = $cep;
+			}
+			if ($registro['casa'] !== $numero) {
+				$dadosAtualizados['casa'] = $numero;
+			}
+			if ($registro['primeiro_nome'] !== $primeiro_nome) {
+				$dadosAtualizados['primeiro_nome'] = $primeiro_nome;
+			}
+
+			// Se houver dados diferentes, atualizamos apenas os campos que mudaram
+			if (!empty($dadosAtualizados)) {
+				$setPart = [];
+				foreach ($dadosAtualizados as $campo => $valor) {
+					$setPart[] = "$campo = :$campo";
+				}
+				$setString = implode(", ", $setPart);
+
+				$updateQuery = $connect->prepare("UPDATE registroDados SET $setString WHERE telefone = :telefone AND idu = :idu");
+				$dadosAtualizados['telefone'] = $wps;
+				$dadosAtualizados['idu'] = $idu;
+				$updateQuery->execute($dadosAtualizados);
+			}
+		} else {
+			// Se o telefone não existir, inserimos os dados
+			$insertDadosRegistro = $connect->prepare("INSERT INTO registroDados (telefone, idu, nome, bairro, endereco, complemento, cep, casa, primeiro_nome) 
+                                     VALUES (:telefone, :idu, :nome, :bairro, :endereco, :complemento, :cep, :casa, :primeiro_nome)");
+			$insertDadosRegistro->execute([
+				'telefone' => $wps,
+				'idu' => $idu,
+				'nome' => $nome,
+				'bairro' => $bairro,
+				'endereco' => $rua,
+				'complemento' => $complemento,
+				'cep' => $cep,
+				'casa' => $numero,
+				'primeiro_nome' => $primeiro_nome
+			]);
+		}
+	}
+
+
+
 
 	$connect->query("UPDATE store SET status='1' WHERE idsecao='$id_cliente'");
 	$connect->query("UPDATE store_o SET status='1' WHERE ids='$id_cliente'");

@@ -318,7 +318,7 @@ include_once('../../funcoes/Key.php');
       <div class="section-wrapper mg-t-20">
         <div style="display:flex;align-items:center;justify-content:space-between;">
           <label class="section-title"><i class="fa fa-check-square-o" aria-hidden="true"></i> PEDIDOS RECEBIDOS || <a href="pdvpedido.php?idpedido=<?= $id_pedido = rand(100000, 999999); ?>" class="btn btn-success btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> Pedido Manual</a> </label>
-          <h3>Painel Funcionario ⇢ <?php echo $_SESSION['nome_funcionario']; ?></h3>
+          <h3><?php echo isset($_SESSION['nome_funcionario']) ? "Painel Funcionario ⇢ ".$_SESSION['nome_funcionario']: "" ?></h3>
         </div>
         <hr>
 
