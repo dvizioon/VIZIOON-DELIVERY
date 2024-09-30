@@ -125,8 +125,36 @@ CREATE TABLE `registroDados` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+ALTER TABLE `registroDados`
+ADD COLUMN `data_nascimento` DATE NOT NULL AFTER `primeiro_nome`;
+
 -- --------------------------------------------------------
 
+-- Tabela cumpom
+CREATE TABLE `cumpomConfig` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idu` varchar(20) NOT NULL,
+  `ativo` ENUM('sim', 'nao') NOT NULL DEFAULT 'nao',
+  `dias_da_semana` JSON NOT NULL,
+  `quantidade_compras` int(11) DEFAULT NULL, 
+  `valor_porcentagem` DECIMAL(5,2) DEFAULT NULL, 
+  `padrao` ENUM('sim', 'nao') NOT NULL DEFAULT 'nao', 
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `cumpomClientes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT, -- Adicionando AUTO_INCREMENT
+  `idu` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `idpedido` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nome` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `data` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT '1',
+  `celular` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`) -- Removendo a vírgula extra e definindo a chave primária
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- --------------------------------------------------------
 --
 -- Estrutura para tabela `MotoBoy`
 --
@@ -430,6 +458,14 @@ MODIFY COLUMN fpagamento VARCHAR(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_unic
 ALTER TABLE pedidos
 ADD COLUMN atendente_criador VARCHAR(60) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL;
 
+ALTER TABLE pedidos
+ADD COLUMN descontos VARCHAR(60) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT "0";
+
+ALTER TABLE pedidos
+ADD COLUMN desconto_opcional VARCHAR(60) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL DEFAULT "0";
+
+
+
 
 -- --------------------------------------------------------
 
@@ -486,7 +522,7 @@ CREATE TABLE `store` (
   `valor` varchar(100) NOT NULL,
   `quantidade` int(11) NOT NULL,
   `tamanho` varchar(19) NOT NULL DEFAULT 'N',
-  `obs` varchar(255) DEFAULT 'Não',
+  `obs` varchar(255) DEFAULT 'Não'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 ALTER TABLE `store`
@@ -628,6 +664,7 @@ ALTER TABLE `opcionais`
 --
 ALTER TABLE `pedidos`
   ADD PRIMARY KEY (`id`);
+  
 
 --
 -- Índices de tabela `produtos`
