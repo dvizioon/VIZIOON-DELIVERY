@@ -178,7 +178,7 @@ if (isset($_POST["pedidomesa"])) {
 									<div class="col-lg-3">
 										<div class="form-group">
 											<label class="form-control-label">Primeiro Nome: <span class="tx-danger">*</span></label>
-											<input type="text" name="nome" class="form-control" maxlength="60" required value="CLIENTE CONSUMIDOR">
+											<input type="text" name="nome" class="form-control" maxlength="60" required value="CLIENTE MESA">
 										</div>
 									</div>
 

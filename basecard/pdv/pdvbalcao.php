@@ -188,13 +188,13 @@ if (isset($_POST["pedidobalcao"])) {
 									<div class="col-lg-12">
 										<div class="form-group">
 											<label class="form-control-label">Nº do seu WhatsApp: <span class="tx-danger">*</span></label>
-											<input type="text" placeholder="DDD+Número" id="cel" name="wps" class="form-control" required>
+											<input type="text" placeholder="DDD+Número" id="cel" name="wps" class="form-control" value="<?= $dadosempresa->celular; ?>" required>
 										</div>
 									</div>
 
 								</div>
 
-
+								<!-- 
 								<div class="row">
 
 									<div class="col-lg-12">
@@ -204,13 +204,13 @@ if (isset($_POST["pedidobalcao"])) {
 										</div>
 									</div>
 
-								</div>
+								</div> -->
 
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="form-group">
 											<label class="form-control-label">Primeiro Nome: <span class="tx-danger">*</span></label>
-											<input type="text" name="nome" id="nome" class="form-control" maxlength="60" required>
+											<input type="text" name="nome" id="nome" class="form-control" value="CLIENTE BALCAO" maxlength="60" required>
 										</div>
 									</div>
 								</div>
@@ -353,26 +353,26 @@ if (isset($_POST["pedidobalcao"])) {
 										const dataOrginal = revertData(dataFormatada);
 										// console.log(dataOrginal);
 
-										$('.dtn').html(`
-											<label class="form-control-label">Data de Nascimento <span class="text-success">(Encontrada)</span>: <span class="tx-danger">*</span></label>
-											<input type="date" class="form-control" value="${dataOrginal}" disabled required>
-										`);
+										// $('.dtn').html(`
+										// 	<label class="form-control-label">Data de Nascimento <span class="text-success">(Encontrada)</span>: <span class="tx-danger">*</span></label>
+										// 	<input type="date" class="form-control" value="${dataOrginal}" disabled required>
+										// `);
 
 									} else {
-										$('.dtn').html(`
-											<label class="form-control-label">Data de Nascimento: <span class="tx-danger">*</span></label>
-											<input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
-										`);
+										// $('.dtn').html(`
+										// 	<label class="form-control-label">Data de Nascimento: <span class="tx-danger">*</span></label>
+										// 	<input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+										// `);
 									}
 
 
 								} else {
 
 									clientFound.css("display", "none");
-									$('.dtn').html(`
-											<label class="form-control-label">Data de Nascimento: <span class="tx-danger">*</span></label>
-											<input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
-										`);
+									// $('.dtn').html(`
+									// 		<label class="form-control-label">Data de Nascimento: <span class="tx-danger">*</span></label>
+									// 		<input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+									// 	`);
 								}
 							},
 							error: function(xhr, status, error) {
@@ -387,10 +387,10 @@ if (isset($_POST["pedidobalcao"])) {
 						// Se o campo de telefone estiver vazio, remove o loading
 						clientFound.css("display", "none");
 
-						$('.dtn').html(`
-											<label class="form-control-label">Data de Nascimento: <span class="tx-danger">*</span></label>
-											<input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
-										`);
+						// $('.dtn').html(`
+						// 					<label class="form-control-label">Data de Nascimento: <span class="tx-danger">*</span></label>
+						// 					<input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+						// 				`);
 						// (Opcional) Você pode adicionar uma mensagem para alertar o usuário que o campo está vazio
 						// alert('Por favor, insira um número de telefone válido.');
 					}

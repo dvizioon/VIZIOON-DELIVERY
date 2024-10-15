@@ -313,6 +313,17 @@ CREATE TABLE `funcionarios` (
   `acesso` varchar(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
+ALTER TABLE `funcionarios`
+-- Permissão Delivery
+ADD COLUMN `perm_pdv` ENUM('Sim', 'Nao') DEFAULT 'Nao' NOT NULL AFTER `acesso`,
+-- Permissão Dashboard
+ADD COLUMN `perm_desborad` ENUM('Sim', 'Nao') DEFAULT 'Nao' NOT NULL AFTER `perm_pdv`,
+-- Permissão Balcao
+ADD COLUMN `perm_balcao` ENUM('Sim', 'Nao') DEFAULT 'Nao' NOT NULL AFTER `perm_desborad`,
+-- Permissão Mesa
+ADD COLUMN `perm_mesa` ENUM('Sim', 'Nao') DEFAULT 'Nao' NOT NULL AFTER `perm_balcao`;
+
+
 --
 -- Estrutura para tabela `fundotopo`
 --

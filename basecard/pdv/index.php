@@ -11,7 +11,7 @@ if (isset($_POST["loginCPF"])) {
 	$login_snh = sha1($login_sn1);
 
 	// Consulta para verificar login e senha, e buscar o nome do usuário
-	$buscauser = $connect->query("SELECT idu, nome FROM funcionarios WHERE login='$login_cpf' AND senha='$login_snh' AND acesso='1'");
+	$buscauser = $connect->query("SELECT id,idu, nome FROM funcionarios WHERE login='$login_cpf' AND senha='$login_snh' AND acesso='1'");
 	$count_user = $buscauser->rowCount();
 	if ($count_user <= 0) {
 		header("location: ./?erro=login");
@@ -45,6 +45,7 @@ if (isset($_POST["loginCPF"])) {
 		// Armazena o id e o nome do usuário na sessão
 		$_SESSION["cod_id"] = $dadoscliente->idu;
 		$_SESSION["nome_funcionario"] = $dadoscliente->nome;
+		$_SESSION["id_funcionario"] = $dadoscliente->id;
 
 		// Configura cookie
 		$cookie_cel = "pdvx";

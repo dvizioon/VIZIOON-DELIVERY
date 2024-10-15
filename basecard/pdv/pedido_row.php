@@ -188,7 +188,7 @@ function renderTable($pedidos)
             <!-- Peidido com ID -->
             <td class="d-table-cell"><?php print $pedidossx->idpedido; ?></td>
             <!-- Data e Hora do Pedido -->
-            <td class="d-none d-sm-table-cell" title="<?= $data . ' ' . $hora ?>"><?php print $texto_truncado_data; ?></td>
+            <td class="d-none d-sm-table-cell" title="<?= $data . ' ' . $hora ?>"><?php print $data  ?></td>
             <!-- Tipo de Pedido -->
             <td class="d-none d-sm-table-cell"><?php print $delivery; ?></td>
             <!-- Nome de Quem pediu o Pedido -->

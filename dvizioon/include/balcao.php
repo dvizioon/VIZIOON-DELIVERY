@@ -179,7 +179,7 @@ $emailEmpresa = truncarTexto($emailEmpresa, 17, 5);
 								</div>
 
 							</div>
-							<div class="row">
+							<!-- <div class="row">
 
 								<div class="col-lg-12">
 									<div class="form-group dtn">
@@ -188,7 +188,7 @@ $emailEmpresa = truncarTexto($emailEmpresa, 17, 5);
 									</div>
 								</div>
 
-							</div>
+							</div> -->
 
 							<div class="row">
 								<div class="col-12">
@@ -267,11 +267,11 @@ $emailEmpresa = truncarTexto($emailEmpresa, 17, 5);
 
 						<div class="d-flex flex-column " style="gap:0.5rem;"><strong>Whatsapp:</strong>
 							<?php
-							$telefone = preg_replace('/[^0-9]/', '', $dadosempresa->telefone); // Remove caracteres não numéricos
+							$telefone = preg_replace('/[^0-9]/', '', $dadosempresa->celular); // Remove caracteres não numéricos
 							?>
 							<a href="https://wa.me/<?php echo $telefone; ?>" target="_blank" style="text-decoration: none; color: #25d366; font-weight: bold; border: 1px solid #25d366; padding: 5px 10px; border-radius: 5px; display: inline-flex; align-items: center;">
 								<i class="fa fa-whatsapp" style="font-size: 16px; margin-right: 5px;"></i>
-								<?php echo $dadosempresa->telefone; ?>
+								<?php echo $dadosempresa->celular; ?>
 							</a>
 
 							<a style="text-decoration: none; color: #007bff; font-weight: bold; border: 1px solid #007bff; padding: 5px 10px; border-radius: 5px; display: inline-flex; align-items: center;">
@@ -394,26 +394,26 @@ $emailEmpresa = truncarTexto($emailEmpresa, 17, 5);
 
 
 
-										$('.dtn').html(`
-											<label class="form-control-label">Data de Nascimento <span class="text-success">(Encontrada)</span>: <span class="tx-danger">*</span></label>
-											<input type="date" class="form-control" value="${dataOrginal}" disabled required>
-										`);
+										// $('.dtn').html(`
+										// 	<label class="form-control-label">Data de Nascimento <span class="text-success">(Encontrada)</span>: <span class="tx-danger">*</span></label>
+										// 	<input type="date" class="form-control" value="${dataOrginal}" disabled required>
+										// `);
 
 									} else {
-										$('.dtn').html(`
-                                    <label class="form-control-label">Data de Nascimento: <span class="tx-danger">*</span></label>
-                                    <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
-                                `);
+										// 		$('.dtn').html(`
+										//     <label class="form-control-label">Data de Nascimento: <span class="tx-danger">*</span></label>
+										//     <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+										// `);
 									}
 
 
 								} else {
 									// Se o telefone não existir, limpa o loading
 									loadingUser.html(``);
-									$('.dtn').html(`
-											<label class="form-control-label">Data de Nascimento: <span class="tx-danger">*</span></label>
-											<input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
-										`);
+									// $('.dtn').html(`
+									// 		<label class="form-control-label">Data de Nascimento: <span class="tx-danger">*</span></label>
+									// 		<input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+									// 	`);
 								}
 							},
 							error: function(xhr, status, error) {
@@ -425,10 +425,10 @@ $emailEmpresa = truncarTexto($emailEmpresa, 17, 5);
 					} else {
 						// Se o campo de telefone estiver vazio, remove o loading
 						loadingUser.html('');
-						$('.dtn').html(`
-											<label class="form-control-label">Data de Nascimento: <span class="tx-danger">*</span></label>
-											<input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
-										`);
+						// $('.dtn').html(`
+						// 					<label class="form-control-label">Data de Nascimento: <span class="tx-danger">*</span></label>
+						// 					<input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+						// 				`);
 						// (Opcional) Você pode adicionar uma mensagem para alertar o usuário que o campo está vazio
 						// alert('Por favor, insira um número de telefone válido.');
 					}
