@@ -1,7 +1,0 @@
-[05-Aug-2024 12:12:54 America/Fortaleza] PHP Warning:  Undefined array key "cod_id" in /home1/sist7655/cardapio.sistemaproweb.com.br/teste/master/topo.php on line 8
-[05-Aug-2024 12:12:54 America/Sao_Paulo] PHP Warning:  Attempt to read property "id" on bool in /home1/sist7655/cardapio.sistemaproweb.com.br/teste/master/db/Funcoes.php on line 12
-[05-Aug-2024 12:12:54 America/Sao_Paulo] PHP Warning:  Attempt to read property "funcionamento" on bool in /home1/sist7655/cardapio.sistemaproweb.com.br/teste/master/db/Funcoes.php on line 13
-[05-Aug-2024 12:12:54 America/Sao_Paulo] PHP Warning:  Attempt to read property "nomeadmin" on bool in /home1/sist7655/cardapio.sistemaproweb.com.br/teste/master/db/Funcoes.php on line 14
-[05-Aug-2024 12:12:54 America/Sao_Paulo] PHP Warning:  Attempt to read property "nomeempresa" on bool in /home1/sist7655/cardapio.sistemaproweb.com.br/teste/master/db/Funcoes.php on line 15
-[05-Aug-2024 12:12:54 America/Sao_Paulo] PHP Warning:  Attempt to read property "expiracao" on bool in /home1/sist7655/cardapio.sistemaproweb.com.br/teste/master/db/Funcoes.php on line 24
-[05-Aug-2024 12:12:54 America/Sao_Paulo] PHP Warning:  Attempt to read property "fuso" on bool in /home1/sist7655/cardapio.sistemaproweb.com.br/teste/master/topo.php on line 12

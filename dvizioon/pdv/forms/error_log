@@ -1,5 +1,0 @@
-[05-Aug-2024 18:13:23 America/Fortaleza] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home1/sist7655/cardapio.sistemaproweb.com.br/teste/pdv/forms/simples_form.php on line 24
-[05-Aug-2024 18:15:27 America/Fortaleza] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home1/sist7655/cardapio.sistemaproweb.com.br/teste/pdv/forms/simples_form.php on line 24
-[05-Aug-2024 18:16:01 America/Fortaleza] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home1/sist7655/cardapio.sistemaproweb.com.br/teste/pdv/forms/simples_form.php on line 24
-[05-Aug-2024 18:17:44 America/Fortaleza] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home1/sist7655/cardapio.sistemaproweb.com.br/teste/pdv/forms/simples_form.php on line 24
-[05-Aug-2024 18:43:48 America/Fortaleza] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home1/sist7655/cardapio.sistemaproweb.com.br/teste/pdv/forms/simples_form.php on line 24
